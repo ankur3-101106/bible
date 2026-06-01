@@ -1039,21 +1039,7 @@
         }
 
         .passage-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .passage-content::-webkit-scrollbar-track {
-            background: var(--surface-low);
-            border-radius: 3px;
-        }
-
-        .passage-content::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
-        }
-
-        .passage-content::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
+            display: none; /* Hide scrollbar since it's not needed */
         }
 
         .verse-number {
@@ -1064,6 +1050,10 @@
             font-size: 0.85rem;
             vertical-align: super;
             margin-right: 4px;
+        }
+
+        .verse {
+            margin-bottom: 12px;
         }
 
         .loading-passage {
@@ -1090,6 +1080,12 @@
 </head>
 
 <body data-theme="midnight">
+
+    <header class="mobile-header">
+        <h1>Sanctuary</h1>
+        <button id="hamburger-btn">☰</button>
+    </header>
+    <div class="overlay"></div>
 
     <div class="app-wrapper">
         <!-- Sidebar -->
@@ -1551,10 +1547,9 @@
             if (!verses || !Array.isArray(verses)) return '';
 
             return verses.map((verse, index) => {
-                // Remove the braces but keep the content inside
                 const cleanedVerse = verse.replace(/{(.*?)}/g, '$1');
-                return `<span class="verse-number">${index + 1}</span>${cleanedVerse}`;
-            }).join(' ');
+                return `<div class="verse"><span class="verse-number">${index + 1}</span>${cleanedVerse}</div>`;
+            }).join('');
         }
 
         function togglePassage(event, index) {
@@ -1617,6 +1612,26 @@
                 initDates();
             }
         }
+
+        function initMobileMenu() {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                    overlay.classList.toggle('open');
+                });
+            }
+            if (overlay) {
+                overlay.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('open');
+                });
+            }
+        }
+        initMobileMenu();
     </script>
 
 </body>
