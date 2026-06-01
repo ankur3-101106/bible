@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,8 +83,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         /* App Layout */
@@ -339,7 +345,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s ease;
         }
 
@@ -362,6 +368,7 @@
             color: var(--primary);
             backdrop-filter: blur(10px);
         }
+
         .btn-outline:hover {
             background: var(--gradient);
             color: white;
@@ -373,6 +380,7 @@
             border: 2px solid var(--danger);
             color: var(--danger);
         }
+
         .btn-danger:hover {
             background: var(--gradient-danger);
             color: white;
@@ -445,7 +453,7 @@
             overflow: hidden;
             margin: 16px 0;
             position: relative;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .progress-bar {
@@ -464,12 +472,14 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             animation: shimmer 2s infinite;
         }
 
         @keyframes shimmer {
-            100% { left: 100%; }
+            100% {
+                left: 100%;
+            }
         }
 
         .progress-stats {
@@ -512,6 +522,7 @@
                 transform: translateY(-10px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -697,11 +708,62 @@
         }
 
         .day-reading {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 0;
-            color: var(--text-main);
-            line-height: 1.3;
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+
+        .day-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-left: auto;
+        }
+
+        .btn-read {
+            background: var(--accent-gold-gradient);
+            color: white;
+            border: 1px solid var(--accent-gold-dark);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-read:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+        }
+
+        .passage-container {
+            padding: 0 8px 16px;
+        }
+
+        .passage-container .reading-passage {
+            margin-top: 0;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="midnight"] .passage-container .reading-passage {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .passage-container .passage-header {
+            padding-top: 16px;
+        }
+
+        .passage-container .passage-header:first-child {
+            padding-top: 0;
+        }
+
+        #missed-alert {
+            margin-top: 20px;
         }
 
         .day-chapter-count {
@@ -769,7 +831,7 @@
             background-color: var(--border);
             transition: all 0.3s ease;
             border-radius: 32px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .toggle-slider:before {
@@ -788,7 +850,7 @@
             box-shadow: var(--shadow);
         }
 
-        .toggle-switch input:checked + .toggle-slider:before {
+        .toggle-switch input:checked+.toggle-slider:before {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='5'%3E%3C/circle%3E%3Cline x1='12' y1='1' x2='12' y2='3'%3E%3C/line%3E%3Cline x1='12' y1='21' x2='12' y2='23'%3E%3C/line%3E%3Cline x1='4.22' y1='4.22' x2='5.64' y2='5.64'%3E%3C/line%3E%3Cline x1='18.36' y1='18.36' x2='19.78' y2='19.78'%3E%3C/line%3E%3Cline x1='1' y1='12' x2='3' y2='12'%3E%3C/line%3E%3Cline x1='21' y1='12' x2='23' y2='12'%3E%3C/line%3E%3Cline x1='4.22' y1='19.78' x2='5.64' y2='18.36'%3E%3C/line%3E%3Cline x1='18.36' y1='5.64' x2='19.78' y2='4.22'%3E%3C/line%3E%3C/svg%3E");
         }
 
@@ -796,15 +858,15 @@
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'%3E%3C/path%3E%3C/svg%3E");
         }
 
-        [data-theme="midnight"] .toggle-switch input:checked + .toggle-slider:before {
+        [data-theme="midnight"] .toggle-switch input:checked+.toggle-slider:before {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23fbbf24' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='5'%3E%3C/circle%3E%3Cline x1='12' y1='1' x2='12' y2='3'%3E%3C/line%3E%3Cline x1='12' y1='21' x2='12' y2='23'%3E%3C/line%3E%3Cline x1='4.22' y1='4.22' x2='5.64' y2='5.64'%3E%3C/line%3E%3Cline x1='18.36' y1='18.36' x2='19.78' y2='19.78'%3E%3C/line%3E%3Cline x1='1' y1='12' x2='3' y2='12'%3E%3C/line%3E%3Cline x1='21' y1='12' x2='23' y2='12'%3E%3C/line%3E%3Cline x1='4.22' y1='19.78' x2='5.64' y2='18.36'%3E%3C/line%3E%3Cline x1='18.36' y1='5.64' x2='19.78' y2='4.22'%3E%3C/line%3E%3C/svg%3E");
         }
 
-        .toggle-switch input:checked + .toggle-slider {
+        .toggle-switch input:checked+.toggle-slider {
             background: var(--gradient);
         }
 
-        .toggle-switch input:checked + .toggle-slider:before {
+        .toggle-switch input:checked+.toggle-slider:before {
             transform: translateX(28px);
             background-color: white;
         }
@@ -893,8 +955,15 @@
 
         /* Loading Animation */
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .loading {
@@ -961,9 +1030,12 @@
             line-height: 1.8;
             color: var(--text-main);
             font-weight: 400;
-            max-height: 400px;
-            overflow-y: auto;
             padding-right: 16px;
+        }
+
+        .passage-container .passage-content {
+            max-height: none;
+            overflow-y: visible;
         }
 
         .passage-content::-webkit-scrollbar {
@@ -1016,529 +1088,535 @@
         }
     </style>
 </head>
+
 <body data-theme="midnight">
 
-<div class="app-wrapper">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h1>Sanctuary</h1>
-                <p class="tagline">Dynamic Bible Planner</p>
+    <div class="app-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1>Sanctuary</h1>
+                    <p class="tagline">Dynamic Bible Planner</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="theme-toggle-checkbox" onchange="toggleTheme()">
+                    <span class="toggle-slider"></span>
+                </label>
             </div>
-            <label class="toggle-switch">
-                <input type="checkbox" id="theme-toggle-checkbox" onchange="toggleTheme()">
-                <span class="toggle-slider"></span>
-            </label>
-        </div>
 
-        <!-- Setup Form -->
-        <div id="setup-section" class="card">
-            <h2>New Plan</h2>
-            <div class="form-group">
-                <label>Start Date</label>
-                <input type="date" id="start-date">
+            <!-- Setup Form -->
+            <div id="setup-section" class="card">
+                <h2>New Plan</h2>
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input type="date" id="start-date">
+                </div>
+                <div class="form-group">
+                    <label>Goal Finish Date</label>
+                    <input type="date" id="end-date">
+                </div>
+                <button class="btn-main" onclick="generatePlan()">Generate Plan</button>
             </div>
-            <div class="form-group">
-                <label>Goal Finish Date</label>
-                <input type="date" id="end-date">
-            </div>
-            <button class="btn-main" onclick="generatePlan()">Generate Plan</button>
-        </div>
 
-        <!-- Dashboard Stats -->
-        <div id="dashboard-section" style="display: none;">
-            <div class="card">
-                <div class="dashboard-header">
-                    <h2>Reading Progress</h2>
-                    <div class="streak-indicator" style="display: none;" id="streak-indicator">
-                        🔥 <span id="streak-days">0</span> day streak
+            <!-- Dashboard Stats -->
+            <div id="dashboard-section" style="display: none;">
+                <div class="card">
+                    <div class="dashboard-header">
+                        <h2>Reading Progress</h2>
+                        <div class="streak-indicator" style="display: none;" id="streak-indicator">
+                            🔥 <span id="streak-days">0</span> day streak
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="overall-progress"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <span class="progress-percentage" id="progress-percentage">0%</span>
+                        <span class="progress-text" id="progress-text">0 / 1189 chapters</span>
                     </div>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-bar" id="overall-progress"></div>
+
+                <div id="missed-alert" class="alert">
+                    <strong style="color: var(--danger); display: block; margin-bottom: 4px;">You've missed reading
+                        days!</strong>
+                    <p style="font-size: 0.8rem; margin-bottom: 12px;">Click below to adjust your schedule and
+                        distribute the missed chapters evenly across your remaining days.</p>
+                    <button class="btn-main btn-success" onclick="redistributePlan()">🔄 Dynamic Adjust</button>
                 </div>
-                <div class="progress-stats">
-                    <span class="progress-percentage" id="progress-percentage">0%</span>
-                    <span class="progress-text" id="progress-text">0 / 1189 chapters</span>
-                </div>
-            </div>
 
-            <div id="missed-alert" class="alert">
-                <strong style="color: var(--danger); display: block; margin-bottom: 4px;">You've missed reading days!</strong>
-                <p style="font-size: 0.8rem; margin-bottom: 12px;">Click below to adjust your schedule and distribute the missed chapters evenly across your remaining days.</p>
-                <button class="btn-main btn-success" onclick="redistributePlan()">🔄 Dynamic Adjust</button>
-            </div>
-
-            <div class="action-buttons">
-                <button class="btn-main btn-warning" onclick="clearPlan()" style="margin-top: 20px;">⚠️ Start Over</button>
-            </div>
-        </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="list-header" id="list-header" style="display: none;">
-            <div class="header-title">
-                <h2>Your Reading Journey</h2>
-                <p>Track your progress through God's Word</p>
-            </div>
-            <div class="view-toggles">
-                <button id="toggle-today" class="active" onclick="setViewMode('today')">📍 Today</button>
-                <button id="toggle-full" onclick="setViewMode('full')">📚 Full Plan</button>
-            </div>
-        </div>
-        <div class="reading-list-container" id="reading-list">
-            <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
-                <div class="empty-state">
-                    <h3>📖 Welcome to Sanctuary</h3>
-                    <p style="margin-top: 12px;">Begin your journey through God's Word by setting your reading schedule in the sidebar.</p>
+                <div class="action-buttons">
+                    <button class="btn-main btn-warning" onclick="clearPlan()" style="margin-top: 20px;">⚠️ Start
+                        Over</button>
                 </div>
             </div>
-        </div>
-    </main>
-</div>
+        </aside>
 
-<script>
-    // Full Bible structure (1189 chapters)
-    const bibleBooks = [
-        {n: "Genesis", c: 50, abbrev: "gn"}, {n: "Exodus", c: 40, abbrev: "ex"}, {n: "Leviticus", c: 27, abbrev: "lv"}, {n: "Numbers", c: 36, abbrev: "nu"}, {n: "Deuteronomy", c: 34, abbrev: "dt"},
-        {n: "Joshua", c: 24, abbrev: "jos"}, {n: "Judges", c: 21, abbrev: "judg"}, {n: "Ruth", c: 4, abbrev: "ru"}, {n: "1 Samuel", c: 31, abbrev: "1sa"}, {n: "2 Samuel", c: 24, abbrev: "2sa"},
-        {n: "1 Kings", c: 22, abbrev: "1ki"}, {n: "2 Kings", c: 25, abbrev: "2ki"}, {n: "1 Chronicles", c: 29, abbrev: "1ch"}, {n: "2 Chronicles", c: 36, abbrev: "2ch"}, {n: "Ezra", c: 10, abbrev: "ezr"},
-        {n: "Nehemiah", c: 13, abbrev: "neh"}, {n: "Esther", c: 10, abbrev: "est"}, {n: "Job", c: 42, abbrev: "job"}, {n: "Psalms", c: 150, abbrev: "ps"}, {n: "Proverbs", c: 31, abbrev: "pr"},
-        {n: "Ecclesiastes", c: 12, abbrev: "ec"}, {n: "Song of Solomon", c: 8, abbrev: "so"}, {n: "Isaiah", c: 66, abbrev: "is"}, {n: "Jeremiah", c: 52, abbrev: "je"}, {n: "Lamentations", c: 5, abbrev: "la"},
-        {n: "Ezekiel", c: 48, abbrev: "ez"}, {n: "Daniel", c: 12, abbrev: "da"}, {n: "Hosea", c: 14, abbrev: "ho"}, {n: "Joel", c: 3, abbrev: "jl"}, {n: "Amos", c: 9, abbrev: "am"},
-        {n: "Obadiah", c: 1, abbrev: "ob"}, {n: "Jonah", c: 4, abbrev: "jon"}, {n: "Micah", c: 7, abbrev: "mi"}, {n: "Nahum", c: 3, abbrev: "na"}, {n: "Habakkuk", c: 3, abbrev: "hab"},
-        {n: "Zephaniah", c: 3, abbrev: "zep"}, {n: "Haggai", c: 2, abbrev: "hag"}, {n: "Zechariah", c: 14, abbrev: "zec"}, {n: "Malachi", c: 4, abbrev: "mal"},
-        {n: "Matthew", c: 28, abbrev: "mt"}, {n: "Mark", c: 16, abbrev: "mr"}, {n: "Luke", c: 24, abbrev: "lk"}, {n: "John", c: 21, abbrev: "jn"}, {n: "Acts", c: 28, abbrev: "ac"},
-        {n: "Romans", c: 16, abbrev: "ro"}, {n: "1 Corinthians", c: 16, abbrev: "1co"}, {n: "2 Corinthians", c: 13, abbrev: "2co"}, {n: "Galatians", c: 6, abbrev: "ga"}, {n: "Ephesians", c: 6, abbrev: "ep"},
-        {n: "Philippians", c: 4, abbrev: "ph"}, {n: "Colossians", c: 4, abbrev: "co"}, {n: "1 Thessalonians", c: 5, abbrev: "1th"}, {n: "2 Thessalonians", c: 3, abbrev: "2th"}, {n: "1 Timothy", c: 6, abbrev: "1ti"},
-        {n: "2 Timothy", c: 4, abbrev: "2ti"}, {n: "Titus", c: 3, abbrev: "ti"}, {n: "Philemon", c: 1, abbrev: "phm"}, {n: "Hebrews", c: 13, abbrev: "he"}, {n: "James", c: 5, abbrev: "jas"},
-        {n: "1 Peter", c: 5, abbrev: "1pe"}, {n: "2 Peter", c: 3, abbrev: "2pe"}, {n: "1 John", c: 5, abbrev: "1jo"}, {n: "2 John", c: 1, abbrev: "2jo"}, {n: "3 John", c: 1, abbrev: "3jo"},
-        {n: "Jude", c: 1, abbrev: "jud"}, {n: "Revelation", c: 22, abbrev: "re"}
-    ];
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="list-header" id="list-header" style="display: none;">
+                <div class="header-title">
+                    <h2>Your Reading Journey</h2>
+                    <p>Track your progress through God's Word</p>
+                </div>
+                <div class="view-toggles">
+                    <button id="toggle-today" class="active" onclick="setViewMode('today')">📍 Today</button>
+                    <button id="toggle-full" onclick="setViewMode('full')">📚 Full Plan</button>
+                </div>
+            </div>
+            <div class="reading-list-container" id="reading-list">
+                <div
+                    style="height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
+                    <div class="empty-state">
+                        <h3>📖 Welcome to Sanctuary</h3>
+                        <p style="margin-top: 12px;">Begin your journey through God's Word by setting your reading
+                            schedule in the sidebar.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
-    let allChaptersFlat = [];
-    bibleBooks.forEach(book => {
-        for (let i = 1; i <= book.c; i++) allChaptersFlat.push(`${book.n} ${i}`);
-    });
+    <script>
+        // Full Bible structure (1189 chapters)
+        const bibleBooks = [
+            { n: "Genesis", c: 50, abbrev: "gn" }, { n: "Exodus", c: 40, abbrev: "ex" }, { n: "Leviticus", c: 27, abbrev: "lv" }, { n: "Numbers", c: 36, abbrev: "nu" }, { n: "Deuteronomy", c: 34, abbrev: "dt" },
+            { n: "Joshua", c: 24, abbrev: "jos" }, { n: "Judges", c: 21, abbrev: "judg" }, { n: "Ruth", c: 4, abbrev: "ru" }, { n: "1 Samuel", c: 31, abbrev: "1sa" }, { n: "2 Samuel", c: 24, abbrev: "2sa" },
+            { n: "1 Kings", c: 22, abbrev: "1ki" }, { n: "2 Kings", c: 25, abbrev: "2ki" }, { n: "1 Chronicles", c: 29, abbrev: "1ch" }, { n: "2 Chronicles", c: 36, abbrev: "2ch" }, { n: "Ezra", c: 10, abbrev: "ezr" },
+            { n: "Nehemiah", c: 13, abbrev: "neh" }, { n: "Esther", c: 10, abbrev: "est" }, { n: "Job", c: 42, abbrev: "job" }, { n: "Psalms", c: 150, abbrev: "ps" }, { n: "Proverbs", c: 31, abbrev: "pr" },
+            { n: "Ecclesiastes", c: 12, abbrev: "ec" }, { n: "Song of Solomon", c: 8, abbrev: "so" }, { n: "Isaiah", c: 66, abbrev: "is" }, { n: "Jeremiah", c: 52, abbrev: "je" }, { n: "Lamentations", c: 5, abbrev: "la" },
+            { n: "Ezekiel", c: 48, abbrev: "ez" }, { n: "Daniel", c: 12, abbrev: "da" }, { n: "Hosea", c: 14, abbrev: "ho" }, { n: "Joel", c: 3, abbrev: "jl" }, { n: "Amos", c: 9, abbrev: "am" },
+            { n: "Obadiah", c: 1, abbrev: "ob" }, { n: "Jonah", c: 4, abbrev: "jon" }, { n: "Micah", c: 7, abbrev: "mi" }, { n: "Nahum", c: 3, abbrev: "na" }, { n: "Habakkuk", c: 3, abbrev: "hab" },
+            { n: "Zephaniah", c: 3, abbrev: "zep" }, { n: "Haggai", c: 2, abbrev: "hag" }, { n: "Zechariah", c: 14, abbrev: "zec" }, { n: "Malachi", c: 4, abbrev: "mal" },
+            { n: "Matthew", c: 28, abbrev: "mt" }, { n: "Mark", c: 16, abbrev: "mr" }, { n: "Luke", c: 24, abbrev: "lk" }, { n: "John", c: 21, abbrev: "jn" }, { n: "Acts", c: 28, abbrev: "ac" },
+            { n: "Romans", c: 16, abbrev: "ro" }, { n: "1 Corinthians", c: 16, abbrev: "1co" }, { n: "2 Corinthians", c: 13, abbrev: "2co" }, { n: "Galatians", c: 6, abbrev: "ga" }, { n: "Ephesians", c: 6, abbrev: "ep" },
+            { n: "Philippians", c: 4, abbrev: "ph" }, { n: "Colossians", c: 4, abbrev: "co" }, { n: "1 Thessalonians", c: 5, abbrev: "1th" }, { n: "2 Thessalonians", c: 3, abbrev: "2th" }, { n: "1 Timothy", c: 6, abbrev: "1ti" },
+            { n: "2 Timothy", c: 4, abbrev: "2ti" }, { n: "Titus", c: 3, abbrev: "ti" }, { n: "Philemon", c: 1, abbrev: "phm" }, { n: "Hebrews", c: 13, abbrev: "he" }, { n: "James", c: 5, abbrev: "jas" },
+            { n: "1 Peter", c: 5, abbrev: "1pe" }, { n: "2 Peter", c: 3, abbrev: "2pe" }, { n: "1 John", c: 5, abbrev: "1jo" }, { n: "2 John", c: 1, abbrev: "2jo" }, { n: "3 John", c: 1, abbrev: "3jo" },
+            { n: "Jude", c: 1, abbrev: "jud" }, { n: "Revelation", c: 22, abbrev: "re" }
+        ];
 
-    let currentViewMode = 'today'; // 'today' or 'full'
-    let bibleData = null;
-
-    window.onload = async () => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
-            // Set checkbox state based on theme
-            const checkbox = document.getElementById('theme-toggle-checkbox');
-            checkbox.checked = savedTheme === 'light';
-        }
-
-        // Load Bible data
-        await loadBibleData();
-
-        const savedPlan = localStorage.getItem('sanctuaryPlan');
-        if (savedPlan) {
-            renderList(JSON.parse(savedPlan));
-        } else {
-            initDates();
-        }
-    };
-
-    async function loadBibleData() {
-        try {
-            const response = await fetch('en_kjv.json');
-            bibleData = await response.json();
-        } catch (error) {
-            console.error('Error loading Bible data:', error);
-        }
-    }
-
-    function setViewMode(mode) {
-        currentViewMode = mode;
-        document.getElementById('toggle-today').className = mode === 'today' ? 'active' : '';
-        document.getElementById('toggle-full').className = mode === 'full' ? 'active' : '';
-        
-        const savedPlan = localStorage.getItem('sanctuaryPlan');
-        if (savedPlan) renderList(JSON.parse(savedPlan), false); // re-render without auto-scrolling
-    }
-
-    function toggleTheme() {
-        const body = document.body;
-        const checkbox = document.getElementById('theme-toggle-checkbox');
-        const current = body.getAttribute('data-theme');
-        const next = current === 'midnight' ? 'light' : 'midnight';
-        body.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-
-        // Update checkbox state
-        checkbox.checked = next === 'light';
-    }
-
-    function initDates() {
-        const today = new Date();
-        const nextYear = new Date();
-        nextYear.setFullYear(today.getFullYear() + 1);
-        document.getElementById('start-date').value = today.toISOString().split('T')[0];
-        document.getElementById('end-date').value = nextYear.toISOString().split('T')[0];
-    }
-
-    function generatePlan() {
-        const startDate = new Date(document.getElementById('start-date').value);
-        const endDate = new Date(document.getElementById('end-date').value);
-        
-        if (!startDate || !endDate || endDate <= startDate) {
-            return alert("Ensure both dates are selected and End Date is after Start Date.");
-        }
-
-        const plan = distributeChapters(allChaptersFlat, startDate, endDate);
-        localStorage.setItem('sanctuaryPlan', JSON.stringify(plan));
-        renderList(plan);
-    }
-
-    function distributeChapters(chaptersToAssign, startD, endD) {
-        startD.setHours(0,0,0,0);
-        endD.setHours(0,0,0,0);
-        
-        const diffTime = Math.abs(endD - startD);
-        const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-        
-        const plan = [];
-        let chapterIndex = 0;
-
-        for (let day = 0; day < totalDays; day++) {
-            if (chapterIndex >= chaptersToAssign.length) break;
-
-            const remainingDays = totalDays - day;
-            const remainingChapters = chaptersToAssign.length - chapterIndex;
-            const chaptersTodayCount = Math.ceil(remainingChapters / remainingDays);
-            
-            const chaptersToday = chaptersToAssign.slice(chapterIndex, chapterIndex + chaptersTodayCount);
-            
-            const currentDate = new Date(startD);
-            currentDate.setDate(startD.getDate() + day);
-
-            plan.push({
-                id: `day-${currentDate.getTime()}`,
-                dateString: currentDate.toISOString().split('T')[0],
-                displayDate: currentDate.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' }),
-                chapters: chaptersToday,
-                readingString: formatReadingString(chaptersToday),
-                completed: false
-            });
-
-            chapterIndex += chaptersTodayCount;
-        }
-        return plan;
-    }
-
-    function redistributePlan() {
-        const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
-        if (!plan) return;
-
-        const today = new Date();
-        today.setHours(0,0,0,0);
-        
-        const originalEndDateStr = plan[plan.length - 1].dateString;
-        const endDate = new Date(originalEndDateStr);
-        endDate.setHours(0,0,0,0);
-
-        if (today > endDate) {
-            alert("Your original end date has passed! The plan will extend starting from today.");
-        }
-
-        let completedHistory = [];
-        let unreadChapters = [];
-
-        plan.forEach(day => {
-            if (day.completed) {
-                completedHistory.push(day);
-            } else {
-                unreadChapters.push(...day.chapters);
-            }
+        let allChaptersFlat = [];
+        bibleBooks.forEach(book => {
+            for (let i = 1; i <= book.c; i++) allChaptersFlat.push(`${book.n} ${i}`);
         });
 
-        const newFuturePlan = distributeChapters(unreadChapters, today > endDate ? today : today, endDate);
-        const finalPlan = [...completedHistory, ...newFuturePlan].sort((a,b) => new Date(a.dateString) - new Date(b.dateString));
-        
-        localStorage.setItem('sanctuaryPlan', JSON.stringify(finalPlan));
-        renderList(finalPlan);
-    }
+        let currentViewMode = 'today'; // 'today' or 'full'
+        let bibleData = null;
 
-    function formatReadingString(arr) {
-        if (!arr || arr.length === 0) return "";
-        if (arr.length === 1) return arr[0];
-
-        const splitRef = (ref) => {
-            const parts = ref.split(" ");
-            const chap = parts.pop();
-            return { book: parts.join(" "), chap };
-        };
-
-        const first = splitRef(arr[0]);
-        const last = splitRef(arr[arr.length - 1]);
-
-        return first.book === last.book 
-            ? `${first.book} ${first.chap}-${last.chap}` 
-            : `${arr[0]} to ${arr[arr.length - 1]}`;
-    }
-
-    function renderList(plan, autoScroll = true) {
-        document.getElementById('setup-section').style.display = 'none';
-        document.getElementById('dashboard-section').style.display = 'block';
-        document.getElementById('list-header').style.display = 'flex';
-
-        const listContainer = document.getElementById('reading-list');
-        listContainer.innerHTML = '';
-        
-        let completedChaptersCount = 0;
-        let missedDays = false;
-        let itemsRendered = 0;
-        
-        const todayObj = new Date();
-        todayObj.setHours(0,0,0,0);
-        const todayString = todayObj.toISOString().split('T')[0];
-        let scrolledToToday = false;
-
-        plan.forEach((day, index) => {
-            if (day.completed) completedChaptersCount += day.chapters.length;
-
-            const dayDateObj = new Date(day.dateString);
-            dayDateObj.setHours(0,0,0,0);
-            
-            const isToday = day.dateString === todayString;
-            const isPast = dayDateObj < todayObj;
-            const isMissed = isPast && !day.completed;
-            
-            if (isMissed) missedDays = true;
-
-            // View Filtering Logic
-            if (currentViewMode === 'today') {
-                if (!isToday && !isMissed) return;
+        window.onload = async () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+                // Set checkbox state based on theme
+                const checkbox = document.getElementById('theme-toggle-checkbox');
+                checkbox.checked = savedTheme === 'light';
             }
 
-            itemsRendered++;
+            // Load Bible data
+            await loadBibleData();
 
-            let statusClass = '';
-            let statusLabel = day.displayDate;
+            const savedPlan = localStorage.getItem('sanctuaryPlan');
+            if (savedPlan) {
+                renderList(JSON.parse(savedPlan));
+            } else {
+                initDates();
+            }
+        };
 
-            if (isToday) { statusClass = 'today'; statusLabel = `🎯 Today • ${day.displayDate}`; }
-            else if (isMissed) { statusClass = 'missed'; statusLabel = `⚠️ Overdue • ${day.displayDate}`; }
-            if (day.completed) statusClass = 'completed';
+        async function loadBibleData() {
+            try {
+                const response = await fetch('en_kjv.json');
+                bibleData = await response.json();
+            } catch (error) {
+                console.error('Error loading Bible data:', error);
+            }
+        }
 
-            const card = document.createElement('div');
-            // Allow the user to click anywhere on the card to check the box
-            card.className = `day-card ${statusClass}`;
-            card.id = `card-${index}`;
-            card.onclick = (e) => {
-                // Prevent double firing if they click the actual input element
-                if (e.target.tagName !== 'INPUT') {
-                    document.getElementById(`checkbox-${index}`).click();
+        function setViewMode(mode) {
+            currentViewMode = mode;
+            document.getElementById('toggle-today').className = mode === 'today' ? 'active' : '';
+            document.getElementById('toggle-full').className = mode === 'full' ? 'active' : '';
+
+            const savedPlan = localStorage.getItem('sanctuaryPlan');
+            if (savedPlan) renderList(JSON.parse(savedPlan), false); // re-render without auto-scrolling
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const checkbox = document.getElementById('theme-toggle-checkbox');
+            const current = body.getAttribute('data-theme');
+            const next = current === 'midnight' ? 'light' : 'midnight';
+            body.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+
+            // Update checkbox state
+            checkbox.checked = next === 'light';
+        }
+
+        function initDates() {
+            const today = new Date();
+            const nextYear = new Date();
+            nextYear.setFullYear(today.getFullYear() + 1);
+            document.getElementById('start-date').value = today.toISOString().split('T')[0];
+            document.getElementById('end-date').value = nextYear.toISOString().split('T')[0];
+        }
+
+        function generatePlan() {
+            const startDate = new Date(document.getElementById('start-date').value);
+            const endDate = new Date(document.getElementById('end-date').value);
+
+            if (!startDate || !endDate || endDate <= startDate) {
+                return alert("Ensure both dates are selected and End Date is after Start Date.");
+            }
+
+            const plan = distributeChapters(allChaptersFlat, startDate, endDate);
+            localStorage.setItem('sanctuaryPlan', JSON.stringify(plan));
+            renderList(plan);
+        }
+
+        function distributeChapters(chaptersToAssign, startD, endD) {
+            startD.setHours(0, 0, 0, 0);
+            endD.setHours(0, 0, 0, 0);
+
+            const diffTime = Math.abs(endD - startD);
+            const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+            const plan = [];
+            let chapterIndex = 0;
+
+            for (let day = 0; day < totalDays; day++) {
+                if (chapterIndex >= chaptersToAssign.length) break;
+
+                const remainingDays = totalDays - day;
+                const remainingChapters = chaptersToAssign.length - chapterIndex;
+                const chaptersTodayCount = Math.ceil(remainingChapters / remainingDays);
+
+                const chaptersToday = chaptersToAssign.slice(chapterIndex, chapterIndex + chaptersTodayCount);
+
+                const currentDate = new Date(startD);
+                currentDate.setDate(startD.getDate() + day);
+
+                plan.push({
+                    id: `day-${currentDate.getTime()}`,
+                    dateString: currentDate.toISOString().split('T')[0],
+                    displayDate: currentDate.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' }),
+                    chapters: chaptersToday,
+                    readingString: formatReadingString(chaptersToday),
+                    completed: false
+                });
+
+                chapterIndex += chaptersTodayCount;
+            }
+            return plan;
+        }
+
+        function redistributePlan() {
+            const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
+            if (!plan) return;
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const originalEndDateStr = plan[plan.length - 1].dateString;
+            const endDate = new Date(originalEndDateStr);
+            endDate.setHours(0, 0, 0, 0);
+
+            if (today > endDate) {
+                alert("Your original end date has passed! The plan will extend starting from today.");
+            }
+
+            let completedHistory = [];
+            let unreadChapters = [];
+
+            plan.forEach(day => {
+                if (day.completed) {
+                    completedHistory.push(day);
+                } else {
+                    unreadChapters.push(...day.chapters);
                 }
+            });
+
+            const newFuturePlan = distributeChapters(unreadChapters, today > endDate ? today : today, endDate);
+            const finalPlan = [...completedHistory, ...newFuturePlan].sort((a, b) => new Date(a.dateString) - new Date(b.dateString));
+
+            localStorage.setItem('sanctuaryPlan', JSON.stringify(finalPlan));
+            renderList(finalPlan);
+        }
+
+        function formatReadingString(arr) {
+            if (!arr || arr.length === 0) return "";
+            if (arr.length === 1) return arr[0];
+
+            const splitRef = (ref) => {
+                const parts = ref.split(" ");
+                const chap = parts.pop();
+                return { book: parts.join(" "), chap };
             };
 
-            // Notice the custom-checkbox class below
-            card.innerHTML = `
+            const first = splitRef(arr[0]);
+            const last = splitRef(arr[arr.length - 1]);
+
+            return first.book === last.book
+                ? `${first.book} ${first.chap}-${last.chap}`
+                : `${arr[0]} to ${arr[arr.length - 1]}`;
+        }
+
+        function renderList(plan, autoScroll = true) {
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('dashboard-section').style.display = 'block';
+            document.getElementById('list-header').style.display = 'flex';
+
+            const listContainer = document.getElementById('reading-list');
+            listContainer.innerHTML = '';
+
+            let completedChaptersCount = 0;
+            let missedDays = false;
+            let itemsRendered = 0;
+
+            const todayObj = new Date();
+            todayObj.setHours(0, 0, 0, 0);
+            const todayString = todayObj.toISOString().split('T')[0];
+            let scrolledToToday = false;
+
+            plan.forEach((day, index) => {
+                if (day.completed) completedChaptersCount += day.chapters.length;
+
+                const dayDateObj = new Date(day.dateString);
+                dayDateObj.setHours(0, 0, 0, 0);
+
+                const isToday = day.dateString === todayString;
+                const isPast = dayDateObj < todayObj;
+                const isMissed = isPast && !day.completed;
+
+                if (isMissed) missedDays = true;
+
+                // View Filtering Logic
+                if (currentViewMode === 'today') {
+                    if (!isToday && !isMissed) return;
+                }
+
+                itemsRendered++;
+
+                let statusClass = '';
+                let statusLabel = day.displayDate;
+
+                if (isToday) { statusClass = 'today'; statusLabel = `🎯 Today • ${day.displayDate}`; }
+                else if (isMissed) { statusClass = 'missed'; statusLabel = `⚠️ Overdue • ${day.displayDate}`; }
+                if (day.completed) statusClass = 'completed';
+
+                const card = document.createElement('div');
+                // Allow the user to click anywhere on the card to check the box
+                card.className = `day-card ${statusClass}`;
+                card.id = `card-${index}`;
+                card.onclick = (e) => {
+                    // Prevent double firing if they click the actual input element
+                    if (e.target.tagName !== 'INPUT' && !e.target.classList.contains('btn-read')) {
+                        document.getElementById(`checkbox-${index}`).click();
+                    }
+                };
+
+                // Notice the custom-checkbox class below
+                card.innerHTML = `
                 <input type="checkbox" id="checkbox-${index}" class="custom-checkbox" onchange="toggleDay(${index})" ${day.completed ? 'checked' : ''}>
                 <div class="day-details">
                     <span class="day-date">${statusLabel}</span>
                     <p class="day-reading">${day.readingString}</p>
                 </div>
-                <div class="day-chapter-count">${day.chapters.length} ch</div>
+                <div class="day-actions">
+                    <span                                                           │
+ │           class="day-chapter-count">${day.chapters.length} ch</span> 
+                    <button class="btn-read" onclick="togglePassage(event, ${index})">Read</button>
+                </div>
             `;
-            listContainer.appendChild(card);
+                listContainer.appendChild(card);
 
-            if (autoScroll && (isToday || isMissed) && !scrolledToToday && currentViewMode === 'full') {
-                setTimeout(() => {
-                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 100);
-                scrolledToToday = true;
-            }
-        });
+                const passageContainer = document.createElement('div');
+                passageContainer.id = `passage-container-${index}`;
+                passageContainer.className = 'passage-container';
+                listContainer.appendChild(passageContainer);
 
-        // Show today's reading passage if in today mode
-        if (currentViewMode === 'today') {
-            let todayChapter = null;
-
-            // Find today's reading
-            plan.forEach(day => {
-                const dayDateObj = new Date(day.dateString);
-                dayDateObj.setHours(0,0,0,0);
-
-                if (day.dateString === todayString && !day.completed && day.chapters.length > 0) {
-                    todayChapter = day.chapters[0]; // Show first chapter of today's reading
+                if (autoScroll && (isToday || isMissed) && !scrolledToToday && currentViewMode === 'full') {
+                    setTimeout(() => {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                    scrolledToToday = true;
                 }
             });
 
-            // If no today reading, check for missed readings
-            if (!todayChapter) {
-                plan.forEach(day => {
-                    const dayDateObj = new Date(day.dateString);
-                    dayDateObj.setHours(0,0,0,0);
-
-                    if (dayDateObj < todayObj && !day.completed && day.chapters.length > 0) {
-                        todayChapter = day.chapters[0]; // Show first chapter of first missed reading
-                        return;
-                    }
-                });
-            }
-
-            if (todayChapter) {
-                displayReadingPassage(todayChapter, listContainer);
-            } else if (itemsRendered === 0) {
-                // If today view is completely empty
+            if (itemsRendered === 0) {
                 listContainer.innerHTML = `
-                    <div class="empty-state">
-                        <h3>All caught up! 🎉</h3>
-                        <p style="margin-top: 8px;">You have no overdue readings and today's schedule is clear.</p>
-                        <button class="btn-main" style="margin: 20px auto 0; width: auto; max-width: 300px;" onclick="setViewMode('full')">Read Ahead in Full Plan</button>
-                    </div>
-                `;
+                <div class="empty-state">
+                    <h3>All caught up! 🎉</h3>
+                    <p style="margin-top: 8px;">You have no overdue readings and today's schedule is clear.</p>
+                    <button class="btn-main" style="margin: 20px auto 0; width: auto; max-width: 300px;" onclick="setViewMode('full')">Read Ahead in Full Plan</button>
+                </div>
+            `;
             }
+
+            document.getElementById('missed-alert').style.display = missedDays ? 'block' : 'none';
+            updateStats(completedChaptersCount);
         }
 
-        document.getElementById('missed-alert').style.display = missedDays ? 'block' : 'none';
-        updateStats(completedChaptersCount);
-    }
+        function toggleDay(index) {
+            const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
+            plan[index].completed = !plan[index].completed;
+            localStorage.setItem('sanctuaryPlan', JSON.stringify(plan));
 
-    function toggleDay(index) {
-        const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
-        plan[index].completed = !plan[index].completed;
-        localStorage.setItem('sanctuaryPlan', JSON.stringify(plan));
-        
-        // Re-render without scrolling to maintain position
-        renderList(plan, false); 
-    }
+            // Re-render without scrolling to maintain position
+            renderList(plan, false);
+        }
 
-    function updateStats(completedCount) {
-        const total = 1189;
-        const percentage = Math.round((completedCount / total) * 100);
-        document.getElementById('overall-progress').style.width = `${percentage}%`;
-        document.getElementById('progress-percentage').innerText = `${percentage}%`;
-        document.getElementById('progress-text').innerText = `${completedCount} / ${total} chapters`;
+        function updateStats(completedCount) {
+            const total = 1189;
+            const percentage = Math.round((completedCount / total) * 100);
+            document.getElementById('overall-progress').style.width = `${percentage}%`;
+            document.getElementById('progress-percentage').innerText = `${percentage}%`;
+            document.getElementById('progress-text').innerText = `${completedCount} / ${total} chapters`;
 
-        // Update streak indicator
-        updateStreak();
-    }
+            // Update streak indicator
+            updateStreak();
+        }
 
-    function updateStreak() {
-        const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
-        if (!plan) return;
+        function updateStreak() {
+            const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
+            if (!plan) return;
 
-        const today = new Date();
-        today.setHours(0,0,0,0);
-        const todayString = today.toISOString().split('T')[0];
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayString = today.toISOString().split('T')[0];
 
-        let streak = 0;
-        let checkDate = today;
+            let streak = 0;
+            let checkDate = today;
 
-        for (let i = plan.length - 1; i >= 0; i--) {
-            if (plan[i].completed) {
-                const planDate = new Date(plan[i].dateString);
-                planDate.setHours(0,0,0,0);
+            for (let i = plan.length - 1; i >= 0; i--) {
+                if (plan[i].completed) {
+                    const planDate = new Date(plan[i].dateString);
+                    planDate.setHours(0, 0, 0, 0);
 
-                if (planDate.getTime() === checkDate.getTime() ||
-                    (streak === 0 && planDate.getTime() === today.getTime()) ||
-                    (streak > 0 && planDate.getTime() === new Date(checkDate.getTime() - 86400000).getTime())) {
-                    streak++;
-                    checkDate = new Date(checkDate.getTime() - 86400000);
-                } else {
-                    break;
+                    if (planDate.getTime() === checkDate.getTime() ||
+                        (streak === 0 && planDate.getTime() === today.getTime()) ||
+                        (streak > 0 && planDate.getTime() === new Date(checkDate.getTime() - 86400000).getTime())) {
+                        streak++;
+                        checkDate = new Date(checkDate.getTime() - 86400000);
+                    } else {
+                        break;
+                    }
                 }
             }
+
+            const streakElement = document.getElementById('streak-indicator');
+            if (streak > 0) {
+                streakElement.style.display = 'flex';
+                document.getElementById('streak-days').innerText = streak;
+            } else {
+                streakElement.style.display = 'none';
+            }
         }
 
-        const streakElement = document.getElementById('streak-indicator');
-        if (streak > 0) {
-            streakElement.style.display = 'flex';
-            document.getElementById('streak-days').innerText = streak;
-        } else {
-            streakElement.style.display = 'none';
-        }
-    }
+        function exportPlan() {
+            const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
+            if (!plan) {
+                alert('No plan to export!');
+                return;
+            }
 
-    function exportPlan() {
-        const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
-        if (!plan) {
-            alert('No plan to export!');
-            return;
-        }
+            let csvContent = 'Date,Reading,Chapters,Status\n';
+            plan.forEach(day => {
+                const status = day.completed ? 'Completed' : 'Pending';
+                csvContent += `${day.dateString},"${day.readingString}",${day.chapters.length},${status}\n`;
+            });
 
-        let csvContent = 'Date,Reading,Chapters,Status\n';
-        plan.forEach(day => {
-            const status = day.completed ? 'Completed' : 'Pending';
-            csvContent += `${day.dateString},"${day.readingString}",${day.chapters.length},${status}\n`;
-        });
-
-        const blob = new Blob([csvContent], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.setAttribute('hidden', '');
-        a.setAttribute('href', url);
-        a.setAttribute('download', `bible-reading-plan-${new Date().toISOString().split('T')[0]}.csv`);
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-
-    function getBiblePassage(bookName, chapter) {
-        if (!bibleData) return null;
-
-        const book = bibleData.find(b => b.name === bookName);
-        if (!book || !book.chapters || !book.chapters[chapter - 1]) return null;
-
-        return book.chapters[chapter - 1];
-    }
-
-    function formatPassageText(verses) {
-        if (!verses || !Array.isArray(verses)) return '';
-
-        return verses.map((verse, index) => {
-            return `<span class="verse-number">${index + 1}</span>${verse}`;
-        }).join(' ');
-    }
-
-    function displayReadingPassage(bookChapter, container) {
-        if (!bibleData) {
-            container.innerHTML = '<div class="loading-passage">Loading Bible text...</div>';
-            return;
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `bible-reading-plan-${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
-        const [bookName, chapterStr] = bookChapter.split(' ');
-        const chapter = parseInt(chapterStr);
+        function getBiblePassage(bookName, chapter) {
+            if (!bibleData) return null;
 
-        const passage = getBiblePassage(bookName, chapter);
-        if (!passage) {
-            container.innerHTML = '<div class="loading-passage">Passage not found</div>';
-            return;
+            const book = bibleData.find(b => b.name === bookName);
+            if (!book || !book.chapters || !book.chapters[chapter - 1]) return null;
+
+            return book.chapters[chapter - 1];
         }
 
-        const formattedText = formatPassageText(passage);
+        function formatPassageText(verses) {
+            if (!verses || !Array.isArray(verses)) return '';
 
-        container.innerHTML = `
-            <div class="reading-passage">
+            return verses.map((verse, index) => {
+                return `<span class="verse-number">${index + 1}</span>${verse}`;
+            }).join(' ');
+        }
+
+        function togglePassage(event, index) {
+            event.stopPropagation(); // Prevent card click
+
+            const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
+            const day = plan[index];
+            const container = document.getElementById(`passage-container-${index}`);
+            const button = event.target;
+
+            if (container.innerHTML) {
+                // It's open, so close it
+                container.innerHTML = '';
+                button.innerText = 'Read';
+            } else {
+                // It's closed, so open it
+                displayReadingPassage(day.chapters, container);
+                button.innerText = 'Close';
+            }
+        }
+
+        function displayReadingPassage(chapters, container) {
+            if (!bibleData) {
+                container.innerHTML = '<div class="loading-passage">Loading Bible text...</div>';
+                return;
+            }
+
+            let allPassagesHTML = '';
+            for (const bookChapter of chapters) {
+                const [bookName, chapterStr] = bookChapter.split(' ');
+                const chapter = parseInt(chapterStr);
+
+                const passage = getBiblePassage(bookName, chapter);
+                const formattedText = passage ? formatPassageText(passage) : 'Passage not found.';
+
+                allPassagesHTML += `
                 <div class="passage-header">
                     <h3 class="passage-title">${bookChapter}</h3>
                 </div>
                 <div class="passage-content">
                     ${formattedText}
                 </div>
+            `;
+            }
+
+            container.innerHTML = `
+            <div class="reading-passage">
+                ${allPassagesHTML}
             </div>
         `;
-    }
-
-    function clearPlan() {
-        if(confirm("Delete your reading plan and start completely over?")) {
-            localStorage.removeItem('sanctuaryPlan');
-            document.getElementById('setup-section').style.display = 'block';
-            document.getElementById('dashboard-section').style.display = 'none';
-            document.getElementById('list-header').style.display = 'none';
-            document.getElementById('reading-list').innerHTML = '';
-            initDates();
         }
-    }
-</script>
+
+        function clearPlan() {
+            if (confirm("Delete your reading plan and start completely over?")) {
+                localStorage.removeItem('sanctuaryPlan');
+                document.getElementById('setup-section').style.display = 'block';
+                document.getElementById('dashboard-section').style.display = 'none';
+                document.getElementById('list-header').style.display = 'none';
+                document.getElementById('reading-list').innerHTML = '';
+                initDates();
+            }
+        }
+    </script>
 
 </body>
+
 </html>

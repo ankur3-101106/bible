@@ -754,16 +754,16 @@
             border-color: rgba(0, 0, 0, 0.4);
         }
 
-        .passage-container .passage-content {
-            max-height: 300px;
-        }
-
         .passage-container .passage-header {
             padding-top: 16px;
         }
 
         .passage-container .passage-header:first-child {
             padding-top: 0;
+        }
+
+        #missed-alert {
+            margin-top: 20px;
         }
 
         .day-chapter-count {
@@ -1030,9 +1030,12 @@
             line-height: 1.8;
             color: var(--text-main);
             font-weight: 400;
-            max-height: 400px;
-            overflow-y: auto;
             padding-right: 16px;
+        }
+
+        .passage-container .passage-content {
+            max-height: none;
+            overflow-y: visible;
         }
 
         .passage-content::-webkit-scrollbar {
