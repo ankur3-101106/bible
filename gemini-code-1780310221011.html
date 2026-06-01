@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanctuary Bible Planner</title>
+    <style>
+        :root {
+            /* Light Theme */
+            --bg-color: #f8fafc;
+            --surface: #ffffff;
+            --surface-low: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --success: #10b981;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        [data-theme="midnight"] {
+            /* Midnight Contrast Theme */
+            --bg-color: #000000;
+            --surface: #12121a;
+            --surface-low: #1a1a2e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #27272a;
+            --primary: #818cf8;
+            --primary-hover: #6366f1;
+            --success: #34d399;
+            --danger: #f87171;
+            --danger-hover: #ef4444;
+            --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        /* App Layout */
+        .app-wrapper {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Sidebar (Dashboard & Stats) */
+        .sidebar {
+            width: 350px;
+            background-color: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        /* Main Content (Reading List) */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-color);
+            overflow: hidden;
+        }
+
+        .list-header {
+            padding: 24px 40px;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--surface);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .view-toggles {
+            display: flex;
+            background-color: var(--surface-low);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .view-toggles button {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: auto;
+        }
+
+        .view-toggles button.active {
+            background-color: var(--surface);
+            color: var(--primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            font-weight: 600;
+        }
+
+        .reading-list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 40px;
+        }
+
+        /* Elements */
+        h1 { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; }
+        p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+        input[type="date"] {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .btn-main {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-main:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
+        .btn-outline { background-color: transparent; border: 1px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background-color: var(--primary); color: white; }
+        .btn-danger { background-color: transparent; border: 1px solid var(--danger); color: var(--danger); }
+        .btn-danger:hover { background-color: var(--danger); color: white; }
+        .btn-success { background-color: var(--success); }
+
+        .card {
+            background-color: var(--surface-low);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background-color: var(--border);
+            border-radius: 8px;
+            height: 12px;
+            width: 100%;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+        .progress-bar {
+            background-color: var(--primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Alerts & Empty States */
+        .alert {
+            background-color: rgba(248, 113, 113, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--surface);
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* Reading List Items */
+        .day-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+            cursor: pointer; /* Makes the whole card clickable */
+        }
+        .day-card:hover { border-color: var(--primary); }
+        .day-card.completed { opacity: 0.6; background-color: var(--surface-low); box-shadow: none; }
+        .day-card.completed .day-reading { text-decoration: line-through; color: var(--text-muted); }
+        .day-card.today { border-left: 4px solid var(--primary); }
+        .day-card.missed { border-left: 4px solid var(--danger); }
+
+        /* Custom Checkbox Implementation */
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            background-color: var(--surface);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            margin-right: 20px;
+        }
+        
+        .day-card:hover .custom-checkbox {
+            border-color: var(--primary);
+        }
+
+        .custom-checkbox:checked {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .custom-checkbox:checked::after {
+            content: '✓';
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .day-details { flex-grow: 1; }
+        .day-date { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .day-reading { font-size: 1.25rem; font-weight: 700; margin: 0; color: var(--text-main); }
+        .day-chapter-count { font-size: 0.85rem; color: var(--text-muted); background: var(--surface-low); padding: 4px 8px; border-radius: 12px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-wrapper { flex-direction: column; overflow-y: auto; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+            .main-content { overflow-y: visible; }
+            .list-header { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 16px; }
+            .view-toggles { width: 100%; display: flex; }
+            .view-toggles button { flex: 1; }
+            .reading-list-container { padding: 16px 20px; overflow-y: visible; }
+            body { overflow: auto; }
+        }
+    </style>
+</head>
+<body data-theme="midnight">
+
+<div class="app-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div>
+            <h1>Sanctuary</h1>
+            <p style="margin-top: 4px;">Dynamic Bible Planner</p>
+        </div>
+
+        <button class="btn-main btn-outline" onclick="toggleTheme()">🌓 Toggle Theme</button>
+
+        <!-- Setup Form -->
+        <div id="setup-section" class="card">
+            <h2>New Plan</h2>
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" id="start-date">
+            </div>
+            <div class="form-group">
+                <label>Goal Finish Date</label>
+                <input type="date" id="end-date">
+            </div>
+            <button class="btn-main" onclick="generatePlan()">Generate Plan</button>
+        </div>
+
+        <!-- Dashboard Stats -->
+        <div id="dashboard-section" style="display: none;">
+            <div class="card" style="margin-bottom: 16px;">
+                <h2>Progress</h2>
+                <div class="progress-container">
+                    <div class="progress-bar" id="overall-progress"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                    <span id="progress-percentage" style="font-weight: bold; font-size: 1.2rem; color: var(--primary);">0%</span>
+                    <span id="progress-text" style="font-size: 0.85rem; color: var(--text-muted);">0 / 1189</span>
+                </div>
+            </div>
+
+            <div id="missed-alert" class="alert">
+                <strong style="color: var(--danger); display: block; margin-bottom: 4px;">You've missed reading days!</strong>
+                <p style="font-size: 0.8rem; margin-bottom: 12px;">Click below to adjust your schedule and distribute the missed chapters evenly across your remaining days.</p>
+                <button class="btn-main btn-success" onclick="redistributePlan()">🔄 Dynamic Adjust</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: auto;">
+                <button class="btn-main btn-danger" onclick="clearPlan()">🗑️ Start Over</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="list-header" id="list-header" style="display: none;">
+            <div>
+                <h2>Your Schedule</h2>
+                <p>Check off chapters as you read.</p>
+            </div>
+            <div class="view-toggles">
+                <button id="toggle-today" class="active" onclick="setViewMode('today')">Focus: Today</button>
+                <button id="toggle-full" onclick="setViewMode('full')">Full Plan</button>
+            </div>
+        </div>
+        <div class="reading-list-container" id="reading-list">
+            <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
+                Enter your dates in the sidebar to generate your reading schedule.
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Full Bible structure (1189 chapters)
+    const bibleBooks = [
+        {n: "Genesis", c: 50}, {n: "Exodus", c: 40}, {n: "Leviticus", c: 27}, {n: "Numbers", c: 36}, {n: "Deuteronomy", c: 34},
+        {n: "Joshua", c: 24}, {n: "Judges", c: 21}, {n: "Ruth", c: 4}, {n: "1 Samuel", c: 31}, {n: "2 Samuel", c: 24},
+        {n: "1 Kings", c: 22}, {n: "2 Kings", c: 25}, {n: "1 Chronicles", c: 29}, {n: "2 Chronicles", c: 36}, {n: "Ezra", c: 10},
+        {n: "Nehemiah", c: 13}, {n: "Esther", c: 10}, {n: "Job", c: 42}, {n: "Psalms", c: 150}, {n: "Proverbs", c: 31},
+        {n: "Ecclesiastes", c: 12}, {n: "Song of Solomon", c: 8}, {n: "Isaiah", c: 66}, {n: "Jeremiah", c: 52}, {n: "Lamentations", c: 5},
+        {n: "Ezekiel", c: 48}, {n: "Daniel", c: 12}, {n: "Hosea", c: 14}, {n: "Joel", c: 3}, {n: "Amos", c: 9},
+        {n: "Obadiah", c: 1}, {n: "Jonah", c: 4}, {n: "Micah", c: 7}, {n: "Nahum", c: 3}, {n: "Habakkuk", c: 3},
+        {n: "Zephaniah", c: 3}, {n: "Haggai", c: 2}, {n: "Zechariah", c: 14}, {n: "Malachi", c: 4},
+        {n: "Matthew", c: 28}, {n: "Mark", c: 16}, {n: "Luke", c: 24}, {n: "John", c: 21}, {n: "Acts", c: 28},
+        {n: "Romans", c: 16}, {n: "1 Corinthians", c: 16}, {n: "2 Corinthians", c: 13}, {n: "Galatians", c: 6}, {n: "Ephesians", c: 6},
+        {n: "Philippians", c: 4}, {n: "Colossians", c: 4}, {n: "1 Thessalonians", c: 5}, {n: "2 Thessalonians", c: 3}, {n: "1 Timothy", c: 6},
+        {n: "2 Timothy", c: 4}, {n: "Titus", c: 3}, {n: "Philemon", c: 1}, {n: "Hebrews", c: 13}, {n: "James", c: 5},
+        {n: "1 Peter", c: 5}, {n: "2 Peter", c: 3}, {n: "1 John", c: 5}, {n: "2 John", c: 1}, {n: "3 John", c: 1},
+        {n: "Jude", c: 1}, {n: "Revelation", c: 22}
+    ];
+
+    let allChaptersFlat = [];
+    bibleBooks.forEach(book => {
+        for (let i = 1; i <= book.c; i++) allChaptersFlat.push(`${book.n} ${i}`);
+    });
+
+    let currentViewMode = 'today'; // 'today' or 'full'
+
+    window.onload = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) document.body.setAttribute('data-theme', savedTheme);
+
+        const savedPlan = localStorage.getItem('sanctuaryPlan');
+        if (savedPlan) {
+            renderList(JSON.parse(savedPlan));
+        } else {
+            initDates();
+        }
+    };
+
+    function setViewMode(mode) {
+        currentViewMode = mode;
+        document.getElementById('toggle-today').className = mode === 'today' ? 'active' : '';
+        document.getElementById('toggle-full').className = mode === 'full' ? 'active' : '';
+        
+        const savedPlan = localStorage.getItem('sanctuaryPlan');
+        if (savedPlan) renderList(JSON.parse(savedPlan), false); // re-render without auto-scrolling
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const current = body.getAttribute('data-theme');
+        const next = current === 'midnight' ? 'light' : 'midnight';
+        body.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    }
+
+    function initDates() {
+        const today = new Date();
+        const nextYear = new Date();
+        nextYear.setFullYear(today.getFullYear() + 1);
+        document.getElementById('start-date').value = today.toISOString().split('T')[0];
+        document.getElementById('end-date').value = nextYear.toISOString().split('T')[0];
+    }
+
+    function generatePlan() {
+        const startDate = new Date(document.getElementById('start-date').value);
+        const endDate = new Date(document.getElementById('end-date').value);
+        
+        if (!startDate || !endDate || endDate <= startDate) {
+            return alert("Ensure both dates are selected and End Date is after Start Date.");
+        }
+
+        const plan = distributeChapters(allChaptersFlat, startDate, endDate);
+        localStorage.setItem('sanctuaryPlan', JSON.stringify(plan));
+        renderList(plan);
+    }
+
+    function distributeChapters(chaptersToAssign, startD, endD) {
+        startD.setHours(0,0,0,0);
+        endD.setHours(0,0,0,0);
+        
+        const diffTime = Math.abs(endD - startD);
+        const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        
+        const plan = [];
+        let chapterIndex = 0;
+
+        for (let day = 0; day < totalDays; day++) {
+            if (chapterIndex >= chaptersToAssign.length) break;
+
+            const remainingDays = totalDays - day;
+            const remainingChapters = chaptersToAssign.length - chapterIndex;
+            const chaptersTodayCount = Math.ceil(remainingChapters / remainingDays);
+            
+            const chaptersToday = chaptersToAssign.slice(chapterIndex, chapterIndex + chaptersTodayCount);
+            
+            const currentDate = new Date(startD);
+            currentDate.setDate(startD.getDate() + day);
+
+            plan.push({
+                id: `day-${currentDate.getTime()}`,
+                dateString: currentDate.toISOString().split('T')[0],
+                displayDate: currentDate.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' }),
+                chapters: chaptersToday,
+                readingString: formatReadingString(chaptersToday),
+                completed: false
+            });
+
+            chapterIndex += chaptersTodayCount;
+        }
+        return plan;
+    }
+
+    function redistributePlan() {
+        const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
+        if (!plan) return;
+
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        
+        const originalEndDateStr = plan[plan.length - 1].dateString;
+        const endDate = new Date(originalEndDateStr);
+        endDate.setHours(0,0,0,0);
+
+        if (today > endDate) {
+            alert("Your original end date has passed! The plan will extend starting from today.");
+        }
+
+        let completedHistory = [];
+        let unreadChapters = [];
+
+        plan.forEach(day => {
+            if (day.completed) {
+                completedHistory.push(day);
+            } else {
+                unreadChapters.push(...day.chapters);
+            }
+        });
+
+        const newFuturePlan = distributeChapters(unreadChapters, today > endDate ? today : today, endDate);
+        const finalPlan = [...completedHistory, ...newFuturePlan].sort((a,b) => new Date(a.dateString) - new Date(b.dateString));
+        
+        localStorage.setItem('sanctuaryPlan', JSON.stringify(finalPlan));
+        renderList(finalPlan);
+    }
+
+    function formatReadingString(arr) {
+        if (!arr || arr.length === 0) return "";
+        if (arr.length === 1) return arr[0];
+
+        const splitRef = (ref) => {
+            const parts = ref.split(" ");
+            const chap = parts.pop();
+            return { book: parts.join(" "), chap };
+        };
+
+        const first = splitRef(arr[0]);
+        const last = splitRef(arr[arr.length - 1]);
+
+        return first.book === last.book 
+            ? `${first.book} ${first.chap}-${last.chap}` 
+            : `${arr[0]} to ${arr[arr.length - 1]}`;
+    }
+
+    function renderList(plan, autoScroll = true) {
+        document.getElementById('setup-section').style.display = 'none';
+        document.getElementById('dashboard-section').style.display = 'block';
+        document.getElementById('list-header').style.display = 'flex';
+
+        const listContainer = document.getElementById('reading-list');
+        listContainer.innerHTML = '';
+        
+        let completedChaptersCount = 0;
+        let missedDays = false;
+        let itemsRendered = 0;
+        
+        const todayObj = new Date();
+        todayObj.setHours(0,0,0,0);
+        const todayString = todayObj.toISOString().split('T')[0];
+        let scrolledToToday = false;
+
+        plan.forEach((day, index) => {
+            if (day.completed) completedChaptersCount += day.chapters.length;
+
+            const dayDateObj = new Date(day.dateString);
+            dayDateObj.setHours(0,0,0,0);
+            
+            const isToday = day.dateString === todayString;
+            const isPast = dayDateObj < todayObj;
+            const isMissed = isPast && !day.completed;
+            
+            if (isMissed) missedDays = true;
+
+            // View Filtering Logic
+            if (currentViewMode === 'today') {
+                if (!isToday && !isMissed) return;
+            }
+
+            itemsRendered++;
+
+            let statusClass = '';
+            let statusLabel = day.displayDate;
+
+            if (isToday) { statusClass = 'today'; statusLabel = `🎯 Today • ${day.displayDate}`; }
+            else if (isMissed) { statusClass = 'missed'; statusLabel = `⚠️ Overdue • ${day.displayDate}`; }
+            if (day.completed) statusClass = 'completed';
+
+            const card = document.createElement('div');
+            // Allow the user to click anywhere on the card to check the box
+            card.className = `day-card ${statusClass}`;
+            card.id = `card-${index}`;
+            card.onclick = (e) => {
+                // Prevent double firing if they click the actual input element
+                if (e.target.tagName !== 'INPUT') {
+                    document.getElementById(`checkbox-${index}`).click();
+                }
+            };
+
+            // Notice the custom-checkbox class below
+            card.innerHTML = `
+                <input type="checkbox" id="checkbox-${index}" class="custom-checkbox" onchange="toggleDay(${index})" ${day.completed ? 'checked' : ''}>
+                <div class="day-details">
+                    <span class="day-date">${statusLabel}</span>
+                    <p class="day-reading">${day.readingString}</p>
+                </div>
+                <div class="day-chapter-count">${day.chapters.length} ch</div>
+            `;
+            listContainer.appendChild(card);
+
+            if (autoScroll && (isToday || isMissed) && !scrolledToToday && currentViewMode === 'full') {
+                setTimeout(() => {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+                scrolledToToday = true;
+            }
+        });
+
+        // If today view is completely empty
+        if (itemsRendered === 0 && currentViewMode === 'today') {
+            listContainer.innerHTML = `
+                <div class="empty-state">
+                    <h3>All caught up! 🎉</h3>
+                    <p style="margin-top: 8px;">You have no overdue readings and today's schedule is clear.</p>
+                    <button class="btn-main" style="margin: 16px auto 0; width: auto;" onclick="setViewMode('full')">Read Ahead in Full Plan</button>
+                </div>
+            `;
+        }
+
+        document.getElementById('missed-alert').style.display = missedDays ? 'block' : 'none';
+        updateStats(completedChaptersCount);
+    }
+
+    function toggleDay(index) {
+        const plan = JSON.parse(localStorage.getItem('sanctuaryPlan'));
+        plan[index].completed = !plan[index].completed;
+        localStorage.setItem('sanctuaryPlan', JSON.stringify(plan));
+        
+        // Re-render without scrolling to maintain position
+        renderList(plan, false); 
+    }
+
+    function updateStats(completedCount) {
+        const total = 1189;
+        const percentage = Math.round((completedCount / total) * 100);
+        document.getElementById('overall-progress').style.width = `${percentage}%`;
+        document.getElementById('progress-percentage').innerText = `${percentage}%`;
+        document.getElementById('progress-text').innerText = `${completedCount} / ${total}`;
+    }
+
+    function clearPlan() {
+        if(confirm("Delete your reading plan and start completely over?")) {
+            localStorage.removeItem('sanctuaryPlan');
+            document.getElementById('setup-section').style.display = 'block';
+            document.getElementById('dashboard-section').style.display = 'none';
+            document.getElementById('list-header').style.display = 'none';
+            document.getElementById('reading-list').innerHTML = '';
+            initDates();
+        }
+    }
+</script>
+
+</body>
+</html>
