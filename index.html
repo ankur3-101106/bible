@@ -898,61 +898,6 @@
             margin-top: auto;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .app-wrapper {
-                flex-direction: column;
-                overflow-y: auto;
-            }
-
-            .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-                flex-shrink: 0;
-                padding: 24px 20px;
-            }
-
-            .main-content {
-                overflow-y: visible;
-            }
-
-            .list-header {
-                padding: 20px 24px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-            }
-
-            .view-toggles {
-                width: 100%;
-                display: flex;
-            }
-
-            .view-toggles button {
-                flex: 1;
-            }
-
-            .reading-list-container {
-                padding: 24px;
-                overflow-y: visible;
-            }
-
-            body {
-                overflow: auto;
-            }
-
-            .day-card {
-                padding: 20px;
-            }
-
-            .custom-checkbox {
-                width: 32px;
-                height: 32px;
-                margin-right: 20px;
-            }
-        }
-
         /* Loading Animation */
         @keyframes pulse {
 
@@ -1039,21 +984,7 @@
         }
 
         .passage-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .passage-content::-webkit-scrollbar-track {
-            background: var(--surface-low);
-            border-radius: 3px;
-        }
-
-        .passage-content::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
-        }
-
-        .passage-content::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
+            display: none; /* Hide scrollbar since it's not needed */
         }
 
         .verse-number {
@@ -1066,6 +997,10 @@
             margin-right: 4px;
         }
 
+        .verse {
+            margin-bottom: 12px;
+        }
+
         .loading-passage {
             display: flex;
             align-items: center;
@@ -1075,15 +1010,123 @@
             font-style: italic;
         }
 
+        /* Mobile Header */
+        .mobile-header {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .mobile-header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        #hamburger-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+        }
+
+        .overlay.open {
+            display: block;
+        }
+
+        .sidebar .view-toggles {
+            flex-direction: column;
+            gap: 8px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        .sidebar .view-toggles button {
+            width: 100%;
+            justify-content: center;
+            display: flex;
+            background-color: var(--surface-low);
+            border: 1px solid var(--border);
+            padding: 12px 18px;
+        }
+
+        .sidebar .view-toggles button.active {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .reading-passage {
-                padding: 24px;
-                margin-top: 16px;
+            .app-wrapper {
+                flex-direction: column;
+                overflow-y: auto;
             }
 
-            .passage-content {
-                font-size: 1rem;
-                max-height: 300px;
+            .mobile-header {
+                display: flex;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                max-width: 380px;
+                height: 100%;
+                border-right: 1px solid var(--border);
+                transition: left 0.3s ease-in-out;
+                z-index: 101;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .main-content {
+                overflow-y: visible;
+            }
+
+            .list-header {
+                display: none; /* Hide original header on mobile */
+            }
+
+            .reading-list-container {
+                padding: 24px;
+                overflow-y: visible;
+            }
+
+            body {
+                overflow: auto;
+            }
+
+            .day-card {
+                padding: 20px;
+            }
+
+            .custom-checkbox {
+                width: 32px;
+                height: 32px;
+                margin-right: 20px;
             }
         }
     </style>
@@ -1091,8 +1134,14 @@
 
 <body data-theme="midnight">
 
+    <header class="mobile-header">
+        <h1>Sanctuary</h1>
+        <button id="hamburger-btn">☰</button>
+    </header>
+    <div class="overlay"></div>
+
     <div class="app-wrapper">
-        <!-- Sidebar -->
+        <!-- Sidebar / Hamburger Menu -->
         <aside class="sidebar">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
@@ -1145,6 +1194,15 @@
                     <button class="btn-main btn-success" onclick="redistributePlan()">🔄 Dynamic Adjust</button>
                 </div>
 
+                <!-- Reading Journey moved to sidebar -->
+                <div class="card" style="margin-top: 20px;">
+                    <h2>Reading View</h2>
+                     <div class="view-toggles">
+                        <button id="toggle-today" class="active" onclick="setViewMode('today')">📍 Today's Portion</button>
+                        <button id="toggle-full" onclick="setViewMode('full')">📚 Full Plan</button>
+                    </div>
+                </div>
+
                 <div class="action-buttons">
                     <button class="btn-main btn-warning" onclick="clearPlan()" style="margin-top: 20px;">⚠️ Start
                         Over</button>
@@ -1154,14 +1212,11 @@
 
         <!-- Main Content -->
         <main class="main-content">
+            <!-- This header is for desktop view -->
             <div class="list-header" id="list-header" style="display: none;">
                 <div class="header-title">
-                    <h2>Your Reading Journey</h2>
+                    <h2>Today's Portion</h2>
                     <p>Track your progress through God's Word</p>
-                </div>
-                <div class="view-toggles">
-                    <button id="toggle-today" class="active" onclick="setViewMode('today')">📍 Today</button>
-                    <button id="toggle-full" onclick="setViewMode('full')">📚 Full Plan</button>
                 </div>
             </div>
             <div class="reading-list-container" id="reading-list">
@@ -1222,6 +1277,8 @@
             } else {
                 initDates();
             }
+            
+            initMobileMenu();
         };
 
         async function loadBibleData() {
@@ -1240,6 +1297,12 @@
 
             const savedPlan = localStorage.getItem('sanctuaryPlan');
             if (savedPlan) renderList(JSON.parse(savedPlan), false); // re-render without auto-scrolling
+            
+            // Close the hamburger menu on mobile after selection
+            if (window.innerWidth <= 768) {
+                document.querySelector('.sidebar').classList.remove('open');
+                document.querySelector('.overlay').classList.remove('open');
+            }
         }
 
         function toggleTheme() {
@@ -1424,8 +1487,7 @@
                     <p class="day-reading">${day.readingString}</p>
                 </div>
                 <div class="day-actions">
-                    <span                                                           │
- │           class="day-chapter-count">${day.chapters.length} ch</span> 
+                    <span class="day-chapter-count">${day.chapters.length} ch</span> 
                     <button class="btn-read" onclick="togglePassage(event, ${index})">Read</button>
                 </div>
             `;
@@ -1551,10 +1613,9 @@
             if (!verses || !Array.isArray(verses)) return '';
 
             return verses.map((verse, index) => {
-                // Remove the braces but keep the content inside
                 const cleanedVerse = verse.replace(/{(.*?)}/g, '$1');
-                return `<span class="verse-number">${index + 1}</span>${cleanedVerse}`;
-            }).join(' ');
+                return `<div class="verse"><span class="verse-number">${index + 1}</span>${cleanedVerse}</div>`;
+            }).join('');
         }
 
         function togglePassage(event, index) {
@@ -1615,6 +1676,25 @@
                 document.getElementById('list-header').style.display = 'none';
                 document.getElementById('reading-list').innerHTML = '';
                 initDates();
+            }
+        }
+
+        function initMobileMenu() {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                    overlay.classList.toggle('open');
+                });
+            }
+            if (overlay) {
+                overlay.addEventListener('click', () => {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('open');
+                });
             }
         }
     </script>
