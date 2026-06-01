@@ -1551,7 +1551,9 @@
             if (!verses || !Array.isArray(verses)) return '';
 
             return verses.map((verse, index) => {
-                return `<span class="verse-number">${index + 1}</span>${verse}`;
+                // Remove the braces but keep the content inside
+                const cleanedVerse = verse.replace(/{(.*?)}/g, '$1');
+                return `<span class="verse-number">${index + 1}</span>${cleanedVerse}`;
             }).join(' ');
         }
 
