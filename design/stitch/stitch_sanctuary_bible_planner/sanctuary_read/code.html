@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#111318;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-dim": "#111318", "on-error": "#690005", "inverse-on-surface": "#2e3036", "inverse-surface": "#e2e2e9", "outline-variant": "#474553", "tertiary-container": "#b98a00", "on-surface": "#e2e2e9", "outline": "#928f9e", "inverse-primary": "#5b4dbf", "on-tertiary": "#402d00", "surface-container": "#1e1f25", "on-tertiary-fixed": "#261a00", "tertiary-fixed": "#ffdf9f", "primary": "#c7bfff", "primary-container": "#8f82f7", "on-surface-variant": "#c9c4d5", "on-secondary-fixed-variant": "#005137", "surface-variant": "#33353a", "surface-container-highest": "#33353a", "error": "#ffb4ab", "on-secondary-fixed": "#002114", "primary-fixed": "#e4dfff", "on-tertiary-container": "#382800", "error-container": "#93000a", "on-primary-container": "#25068a", "on-secondary-container": "#00452e", "on-primary-fixed-variant": "#4332a6", "on-background": "#e2e2e9", "tertiary-fixed-dim": "#f9bd22", "on-primary-fixed": "#170065", "on-error-container": "#ffdad6", "secondary-fixed": "#68fcbf", "on-primary": "#2b138f", "secondary-container": "#00bd85", "on-tertiary-fixed-variant": "#5c4300", "surface-container-high": "#282a2f", "surface-bright": "#37393f", "background": "#111318", "surface": "#111318", "secondary": "#45dfa4", "secondary-fixed-dim": "#45dfa4", "on-secondary": "#003825", "surface-container-lowest": "#0c0e13", "primary-fixed-dim": "#c7bfff", "surface-tint": "#c7bfff", "tertiary": "#f9bd22", "surface-container-low": "#1a1b21" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xs": "0.25rem", "space-xl": "2rem", "margin": "1rem", "gutter": "1rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-md": "1rem" }, fontFamily: { "scripture-body": ["Newsreader"], "display-lg-mobile": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "scripture-hero": ["Newsreader"], "scripture-verse-num": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"] }, fontSize: { "scripture-body": ["19px", { "lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }], "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-lg": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "scripture-hero": ["26px", { "lineHeight": "38px", "fontWeight": "400" }], "scripture-verse-num": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md antialiased min-h-screen flex flex-col"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-dim/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.35)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Sanctuary Emblem" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1XfumW9SER4WcmhJstsBaJH1bvQ0ZeaKZhPr3HTkTPFZz3IoufDXXh6idfaOxR-Yv79fffPsKUOFKzbzrMODoLzANzCOeZZUfcc-gHeAfgLOJ3zy9KZaUF7hK48wYwZUbf0E893L222v8w4LmDNHIuMbkVr33sdb6QWnm49SBheNaaxUfdlELXlnkGce0_-ZUUTfSnY-sxPjE1t_koiw9yMi0f3CqBleYBk-DxMrY8g0YTcsW7vr8WwpeU"/><div class="flex flex-col min-w-0"><span class="font-label-sm text-label-sm text-primary tracking-wider uppercase truncate">Sanctuary</span><h1 class="font-headline-md text-headline-md text-on-surface truncate">Read</h1></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Search Scriptures" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[22px]">search</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 shadow-[0_0_12px_rgba(199,191,255,0.2)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full pb-10 select-none">
+<!-- Subtle Session Context Strip -->
+<div class="sticky top-0 z-30 w-full bg-surface-container-low/95 backdrop-blur-md px-margin py-2.5 shadow-sm">
+<div class="flex items-center justify-between gap-space-sm mb-1.5">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Daily Formation · Genesis 42–45</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold flex-shrink-0">2 of 4 Chapters</span>
+</div>
+<!-- Mini Progress Track -->
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden flex">
+<div class="h-full bg-secondary rounded-full transition-all duration-300" style="width: 50%;"></div>
+</div>
+</div>
+<!-- Chapter Meta & Quick Reader Controls -->
+<div class="px-margin pt-space-lg pb-space-sm flex flex-col gap-space-md">
+<div class="flex items-start justify-between">
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">The Pentateuch</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Genesis 42</h2>
+<span class="font-label-md text-label-md text-on-surface-variant mt-0.5">Chapter 42 of 50 · English Standard Version</span>
+</div>
+<!-- Quick Context Action: Audio Stream -->
+<button aria-label="Listen to chapter audio" class="h-10 px-3 rounded-full bg-surface-container-high hover:bg-surface-bright text-primary flex items-center gap-1.5 transition-all shadow-sm active:scale-95" id="audio-btn">
+<span class="material-symbols-outlined text-[19px]">headphones</span>
+<span class="font-label-md text-label-md font-semibold pr-0.5">Listen</span>
+</button>
+</div>
+<!-- Reader Customization Utility Bar -->
+<div class="flex items-center justify-between p-1.5 rounded-xl bg-surface-container-low">
+<!-- Font Resizing Toggles -->
+<div class="flex items-center gap-1 bg-surface-container px-2 py-1 rounded-lg">
+<button aria-label="Decrease text scale" class="w-8 h-7 flex items-center justify-center text-on-surface-variant hover:text-on-surface font-headline-md text-[13px] active:scale-90 transition-transform" id="font-dec">A-</button>
+<div class="w-px h-3.5 bg-surface-variant"></div>
+<button aria-label="Increase text scale" class="w-8 h-7 flex items-center justify-center text-primary font-headline-md text-[16px] active:scale-90 transition-transform" id="font-inc">A+</button>
+</div>
+<!-- Reading Color Atmosphere -->
+<div class="flex items-center gap-1.5">
+<button class="w-7 h-7 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-inner ring-1 ring-primary/40" title="Sanctuary Deep Canvas">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+</button>
+<button class="w-7 h-7 rounded-full bg-[#272118] flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity" title="Sepia Contemplation">
+<span class="w-2 h-2 rounded-full bg-[#e8be82]"></span>
+</button>
+<button class="w-7 h-7 rounded-full bg-[#050608] flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity" title="True Nocturne Pure Black">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+</button>
+</div>
+<!-- Chapter Quick Bookmark -->
+<button aria-label="Bookmark this chapter" class="w-9 h-8 flex items-center justify-center rounded-lg text-tertiary hover:bg-surface-container-high transition-colors" id="bookmark-toggle">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</button>
+</div>
+</div>
+<!-- Ambient Reader Scripture Canvas -->
+<div class="relative px-6 py-4 flex flex-col space-y-6 text-on-surface select-text" id="scripture-container">
+<!-- Verse 1 -->
+<p class="font-scripture-body text-scripture-body leading-[32px] relative transition-colors duration-200">
+<sup class="font-scripture-verse-num text-scripture-verse-num text-primary/70 mr-2 align-baseline select-none">1</sup>
+      Now when Jacob learned that there was grain for sale in Egypt, he said to his sons, 
+      <span class="italic text-on-surface-variant">“Why do you look at one another?”</span>
+</p>
+<!-- Verse 2 -->
+<p class="font-scripture-body text-scripture-body leading-[32px] relative transition-colors duration-200">
+<sup class="font-scripture-verse-num text-scripture-verse-num text-primary/70 mr-2 align-baseline select-none">2</sup>
+      And he said, “Behold, I have heard that there is grain for sale in Egypt. Go down and buy grain for us there, that we may live and not die.”
+    </p>
+<!-- Verse 3 -->
+<p class="font-scripture-body text-scripture-body leading-[32px] relative transition-colors duration-200">
+<sup class="font-scripture-verse-num text-scripture-verse-num text-primary/70 mr-2 align-baseline select-none">3</sup>
+      So ten of Joseph’s brothers went down to buy grain in Egypt.
+    </p>
+<!-- Verse 4 -->
+<p class="font-scripture-body text-scripture-body leading-[32px] relative transition-colors duration-200">
+<sup class="font-scripture-verse-num text-scripture-verse-num text-primary/70 mr-2 align-baseline select-none">4</sup>
+      But Jacob did not send Benjamin, Joseph’s brother, with his brothers, for he feared that harm might happen to him.
+    </p>
+<!-- Verse 5 -->
+<p class="font-scripture-body text-scripture-body leading-[32px] relative transition-colors duration-200">
+<sup class="font-scripture-verse-num text-scripture-verse-num text-primary/70 mr-2 align-baseline select-none">5</sup>
+      Thus the sons of Israel came to buy among the others who came, for the famine was in the land of Canaan.
+    </p>
+<!-- Verse 6: Active Translucent Highlight State -->
+<div class="relative -mx-3 px-3 py-2 rounded-xl bg-primary/10 transition-all shadow-sm">
+<p class="font-scripture-body text-scripture-body leading-[32px] text-on-surface">
+<sup class="font-scripture-verse-num text-scripture-verse-num text-primary font-bold mr-2 align-baseline select-none">6</sup>
+        Now Joseph was governor over the land. He was the one who sold to all the people of the land. And Joseph’s brothers came and bowed themselves before him with their faces to the ground.
+      </p>
+<div class="absolute left-0 top-3 bottom-3 w-1 bg-primary rounded-r-full"></div>
+</div>
+<!-- Verse 7 -->
+<p class="font-scripture-body text-scripture-body leading-[32px] relative transition-colors duration-200 opacity-90">
+<sup class="font-scripture-verse-num text-scripture-verse-num text-primary/70 mr-2 align-baseline select-none">7</sup>
+      Joseph saw his brothers and recognized them, but he treated them like strangers and spoke roughly to them. “Where do you come from?” he said. They said, “From the land of Canaan, to buy food.”
+    </p>
+<!-- Verse 8 -->
+<p class="font-scripture-body text-scripture-body leading-[32px] relative transition-colors duration-200 opacity-90">
+<sup class="font-scripture-verse-num text-scripture-verse-num text-primary/70 mr-2 align-baseline select-none">8</sup>
+      And Joseph recognized his brothers, but they did not recognize him.
+    </p>
+<!-- Subtle Devotional Insight Card -->
+<div class="mt-space-md p-4 rounded-xl bg-surface-container flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-secondary/15 text-secondary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-secondary font-semibold uppercase tracking-wider">Cross Reference</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          See Genesis 37:7 where Joseph first dreamed of his brothers’ sheaves bowing before his sheaf.
+        </p>
+</div>
+</div>
+</div>
+<!-- Floating Verse Contextual Pill (Active Highlight Preview) -->
+<div class="sticky bottom-4 z-40 mx-auto px-margin w-full max-w-sm">
+<div class="bg-surface-container-high/95 backdrop-blur-xl rounded-full px-4 py-2.5 shadow-[0_12px_32px_rgba(0,0,0,0.65)] flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="font-label-sm text-label-sm font-semibold text-primary">v. 6 selected</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-primary hover:bg-surface-bright active:scale-95 transition-all" id="menu-highlight" title="Apply Highlight">
+<span class="material-symbols-outlined text-[20px]">brush</span>
+</button>
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-bright active:scale-95 transition-all" id="menu-note" title="Add Note">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</button>
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-tertiary hover:bg-surface-bright active:scale-95 transition-all" id="menu-bookmark" title="Save Verse">
+<span class="material-symbols-outlined text-[20px]">bookmark_add</span>
+</button>
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-bright active:scale-95 transition-all" id="menu-share" title="Share Scripture">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-95 transition-all" id="menu-copy" title="Copy Text">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Completion Section -->
+<div class="px-margin mt-space-lg flex flex-col gap-space-md">
+<!-- Complete Chapter Action Button -->
+<button class="w-full py-4 px-space-md rounded-xl bg-primary text-on-primary font-headline-md text-headline-md font-semibold flex items-center justify-center gap-2 shadow-lg hover:brightness-105 active:scale-[0.98] transition-all" id="complete-btn">
+<span class="material-symbols-outlined text-[22px]" id="complete-icon">check_circle</span>
+<span id="complete-text">Mark Chapter 42 Complete</span>
+</button>
+<!-- Chapter Navigation Footer -->
+<div class="grid grid-cols-2 gap-space-sm pt-2">
+<button class="py-3 px-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container flex items-center justify-start gap-2 min-w-0 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant flex-shrink-0">arrow_back</span>
+<div class="flex flex-col text-left min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Previous</span>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Genesis 41</span>
+</div>
+</button>
+<button class="py-3 px-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container flex items-center justify-end gap-2 min-w-0 transition-colors text-right">
+<div class="flex flex-col text-right min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Next</span>
+<span class="font-label-lg text-label-lg text-primary truncate font-semibold">Genesis 43</span>
+</div>
+<span class="material-symbols-outlined text-[20px] text-primary flex-shrink-0">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  // Simple Micro-Interactions for Reading Experience
+  const completeBtn = document.getElementById('complete-btn');
+  const completeText = document.getElementById('complete-text');
+  const completeIcon = document.getElementById('complete-icon');
+  let isComplete = false;
+
+  if (completeBtn) {
+    completeBtn.addEventListener('click', () => {
+      isComplete = !isComplete;
+      if (isComplete) {
+        completeBtn.classList.remove('bg-primary', 'text-on-primary');
+        completeBtn.classList.add('bg-secondary', 'text-on-secondary');
+        completeText.textContent = 'Chapter 42 Completed!';
+        completeIcon.textContent = 'task_alt';
+      } else {
+        completeBtn.classList.add('bg-primary', 'text-on-primary');
+        completeBtn.classList.remove('bg-secondary', 'text-on-secondary');
+        completeText.textContent = 'Mark Chapter 42 Complete';
+        completeIcon.textContent = 'check_circle';
+      }
+    });
+  }
+
+  // Bookmark Toggle
+  const bookmarkBtn = document.getElementById('bookmark-toggle');
+  let bookmarked = true;
+  if (bookmarkBtn) {
+    bookmarkBtn.addEventListener('click', () => {
+      bookmarked = !bookmarked;
+      const icon = bookmarkBtn.querySelector('.material-symbols-outlined');
+      if (bookmarked) {
+        icon.style.fontVariationSettings = "'FILL' 1";
+        bookmarkBtn.classList.add('text-tertiary');
+        bookmarkBtn.classList.remove('text-on-surface-variant');
+      } else {
+        icon.style.fontVariationSettings = "'FILL' 0";
+        bookmarkBtn.classList.remove('text-tertiary');
+        bookmarkBtn.classList.add('text-on-surface-variant');
+      }
+    });
+  }
+
+  // Font Size Resizing Simulation
+  const scriptureContainer = document.getElementById('scripture-container');
+  const incBtn = document.getElementById('font-inc');
+  const decBtn = document.getElementById('font-dec');
+  let currentStep = 0;
+
+  if (incBtn && decBtn && scriptureContainer) {
+    incBtn.addEventListener('click', () => {
+      if (currentStep < 2) {
+        currentStep++;
+        applyScale();
+      }
+    });
+    decBtn.addEventListener('click', () => {
+      if (currentStep > -1) {
+        currentStep--;
+        applyScale();
+      }
+    });
+
+    function applyScale() {
+      const paras = scriptureContainer.querySelectorAll('p');
+      paras.forEach(p => {
+        if (currentStep === 1) {
+          p.style.fontSize = '21px';
+          p.style.lineHeight = '36px';
+        } else if (currentStep === 2) {
+          p.style.fontSize = '23px';
+          p.style.lineHeight = '40px';
+        } else if (currentStep === -1) {
+          p.style.fontSize = '17px';
+          p.style.lineHeight = '28px';
+        } else {
+          p.style.fontSize = '';
+          p.style.lineHeight = '';
+        }
+      });
+    }
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-low/90 backdrop-blur-xl shadow-[0_-4px_24px_rgba(0,0,0,0.5)]" data-active-classes="[&amp;_.nav-pill]:bg-primary-container/20 [&amp;_.nav-pill]:text-primary-container [&amp;_.nav-label]:text-primary-container [&amp;_.nav-label]:font-semibold"><div class="flex items-center justify-around h-20 px-space-xs"><a class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all" data-path="home" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">home</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">Home</span></a><a aria-current="page" class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all [&amp;_.nav-pill]:bg-primary-container/20 [&amp;_.nav-pill]:text-primary-container [&amp;_.nav-label]:text-primary-container [&amp;_.nav-label]:font-semibold" data-path="read" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">auto_stories</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">Read</span></a><a class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all" data-path="plan" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">event_available</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">Plan</span></a><a class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all" data-path="progress" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">bar_chart</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">Progress</span></a><a class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all" data-path="more" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">grid_view</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">More</span></a></div></nav></body></html>

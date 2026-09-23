@@ -1,0 +1,116 @@
+package com.sanctuary.bible.ui.reader
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.sanctuary.bible.data.model.Verse
+import com.sanctuary.bible.data.repository.BibleRepository
+import com.sanctuary.bible.data.repository.PlanRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+enum class ReaderTheme(val nameTitle: String, val bgHex: Long, val textHex: Long) {
+    SANCTUARY("Sanctuary Canvas", 0xFF111318, 0xFFE2E2E9),
+    SEPIA("Sepia Contemplation", 0xFF272118, 0xFFE8BE82),
+    NOCTURNE("Nocturne Pure Black", 0xFF050608, 0xFF9CA3AF)
+}
+
+data class ReaderUiState(
+    val bookName: String = "Genesis",
+    val chapter: Int = 42,
+    val verses: List<Verse> = emptyList(),
+    val fontSizeSp: Float = 19f,
+    val readerTheme: ReaderTheme = ReaderTheme.SANCTUARY,
+    val selectedVerseNumber: Int? = null,
+    val isLoading: Boolean = false,
+    val isChapterCompleted: Boolean = false
+)
+
+class ReaderViewModel(
+    private val bibleRepository: BibleRepository,
+    private val planRepository: PlanRepository
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(ReaderUiState())
+    val uiState: StateFlow<ReaderUiState> = _uiState.asStateFlow()
+
+    init {
+        loadChapter("Genesis", 42)
+    }
+
+    fun loadChapter(bookName: String, chapter: Int) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, bookName = bookName, chapter = chapter, selectedVerseNumber = null) }
+            val verses = bibleRepository.getChapterVerses(bookName, chapter)
+            _uiState.update { it.copy(verses = verses, isLoading = false) }
+        }
+    }
+
+    fun nextChapter() {
+        val current = _uiState.value
+        loadChapter(current.bookName, current.chapter + 1)
+    }
+
+    fun previousChapter() {
+        val current = _uiState.value
+        if (current.chapter > 1) {
+            loadChapter(current.bookName, current.chapter - 1)
+        }
+    }
+
+    fun increaseFontSize() {
+        _uiState.update { it.copy(fontSizeSp = (it.fontSizeSp + 2f).coerceAtMost(28f)) }
+    }
+
+    fun decreaseFontSize() {
+        _uiState.update { it.copy(fontSizeSp = (it.fontSizeSp - 2f).coerceAtLeast(14f)) }
+    }
+
+    fun setReaderTheme(theme: ReaderTheme) {
+        _uiState.update { it.copy(readerTheme = theme) }
+    }
+
+    fun selectVerse(verseNumber: Int) {
+        _uiState.update {
+            val newSelection = if (it.selectedVerseNumber == verseNumber) null else verseNumber
+            it.copy(selectedVerseNumber = newSelection)
+        }
+    }
+
+    fun bookmarkSelectedVerse() {
+        val state = _uiState.value
+        val verseNum = state.selectedVerseNumber ?: return
+        viewModelScope.launch {
+            bibleRepository.saveBookmark(state.bookName, state.chapter, verseNum)
+        }
+    }
+
+    fun highlightSelectedVerse(colorHex: String = "#8F82F7") {
+        val state = _uiState.value
+        val verseNum = state.selectedVerseNumber ?: return
+        viewModelScope.launch {
+            bibleRepository.saveHighlight(state.bookName, state.chapter, verseNum, colorHex)
+        }
+    }
+
+    fun addNoteToSelectedVerse(text: String) {
+        val state = _uiState.value
+        val verseNum = state.selectedVerseNumber ?: return
+        viewModelScope.launch {
+            bibleRepository.saveNote(state.bookName, state.chapter, verseNum, text)
+        }
+    }
+
+    class Factory(
+        private val bibleRepository: BibleRepository,
+        private val planRepository: PlanRepository
+    ) : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return ReaderViewModel(bibleRepository, planRepository) as T
+        }
+    }
+}

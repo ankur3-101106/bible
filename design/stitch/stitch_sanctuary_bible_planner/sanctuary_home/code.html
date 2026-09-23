@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#111318;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-dim": "#111318", "on-error": "#690005", "inverse-on-surface": "#2e3036", "inverse-surface": "#e2e2e9", "outline-variant": "#474553", "tertiary-container": "#b98a00", "on-surface": "#e2e2e9", "outline": "#928f9e", "inverse-primary": "#5b4dbf", "on-tertiary": "#402d00", "surface-container": "#1e1f25", "on-tertiary-fixed": "#261a00", "tertiary-fixed": "#ffdf9f", "primary": "#c7bfff", "primary-container": "#8f82f7", "on-surface-variant": "#c9c4d5", "on-secondary-fixed-variant": "#005137", "surface-variant": "#33353a", "surface-container-highest": "#33353a", "error": "#ffb4ab", "on-secondary-fixed": "#002114", "primary-fixed": "#e4dfff", "on-tertiary-container": "#382800", "error-container": "#93000a", "on-primary-container": "#25068a", "on-secondary-container": "#00452e", "on-primary-fixed-variant": "#4332a6", "on-background": "#e2e2e9", "tertiary-fixed-dim": "#f9bd22", "on-primary-fixed": "#170065", "on-error-container": "#ffdad6", "secondary-fixed": "#68fcbf", "on-primary": "#2b138f", "secondary-container": "#00bd85", "on-tertiary-fixed-variant": "#5c4300", "surface-container-high": "#282a2f", "surface-bright": "#37393f", "background": "#111318", "surface": "#111318", "secondary": "#45dfa4", "secondary-fixed-dim": "#45dfa4", "on-secondary": "#003825", "surface-container-lowest": "#0c0e13", "primary-fixed-dim": "#c7bfff", "surface-tint": "#c7bfff", "tertiary": "#f9bd22", "surface-container-low": "#1a1b21" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xs": "0.25rem", "space-xl": "2rem", "margin": "1rem", "gutter": "1rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-md": "1rem" }, fontFamily: { "scripture-body": ["Newsreader"], "display-lg-mobile": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "scripture-hero": ["Newsreader"], "scripture-verse-num": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"] }, fontSize: { "scripture-body": ["19px", { "lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }], "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-lg": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "scripture-hero": ["26px", { "lineHeight": "38px", "fontWeight": "400" }], "scripture-verse-num": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md antialiased min-h-screen flex flex-col"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-dim/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.35)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Sanctuary Emblem" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1XfumW9SER4WcmhJstsBaJH1bvQ0ZeaKZhPr3HTkTPFZz3IoufDXXh6idfaOxR-Yv79fffPsKUOFKzbzrMODoLzANzCOeZZUfcc-gHeAfgLOJ3zy9KZaUF7hK48wYwZUbf0E893L222v8w4LmDNHIuMbkVr33sdb6QWnm49SBheNaaxUfdlELXlnkGce0_-ZUUTfSnY-sxPjE1t_koiw9yMi0f3CqBleYBk-DxMrY8g0YTcsW7vr8WwpeU"/><div class="flex flex-col min-w-0"><span class="font-label-sm text-label-sm text-primary tracking-wider uppercase truncate">Sanctuary</span><h1 class="font-headline-md text-headline-md text-on-surface truncate">Home</h1></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Search Scriptures" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[22px]">search</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 shadow-[0_0_12px_rgba(199,191,255,0.2)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full px-margin pb-space-xl gap-y-space-md">
+<!-- Ambient Greeting & Serene Presence Bar -->
+<section class="flex items-center justify-between pt-space-xs">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-headline-md text-headline-md text-on-surface">Good morning</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Continue your journey in quietude.</p>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container-high px-3 py-1.5 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary">wb_twilight</span>
+<span class="font-label-sm text-label-sm text-on-surface">Day 283</span>
+</div>
+</section>
+<!-- Active Plan Overview Bento (Elevation Level 2: Surface Container) -->
+<section class="w-full bg-surface-container rounded-xl p-space-md shadow-md relative overflow-hidden flex flex-col gap-3">
+<!-- Subtle luminous background aura -->
+<div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-primary/10 blur-2xl pointer-events-none"></div>
+<div class="flex items-start justify-between relative z-10">
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Current Canonical Plan</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-0.5 truncate">Complete the Bible</h2>
+</div>
+<span class="inline-flex items-center gap-1.5 bg-secondary/15 text-secondary px-2.5 py-1 rounded-full font-label-sm text-label-sm font-semibold tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+        ON TRACK
+      </span>
+</div>
+<!-- Metrics Row -->
+<div class="flex items-center justify-between text-on-surface-variant font-label-md text-label-md relative z-10 pt-1">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="font-semibold text-primary">32%</span> complete
+      </span>
+<span>384 / 1,189 chapters</span>
+<span class="text-on-surface-variant/80">82 days left</span>
+</div>
+<!-- Smooth Continuous Progress Track -->
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden relative z-10">
+<div class="h-full rounded-full bg-gradient-to-r from-primary-container via-primary to-secondary transition-all duration-500" style="width: 32%;"></div>
+</div>
+</section>
+<!-- Visual Centerpiece: Today's Reading Hub -->
+<section class="w-full bg-surface-container rounded-xl p-space-md shadow-lg flex flex-col gap-4 relative">
+<!-- Header with Visual Chapter Graphic & Title -->
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">Today's Reading</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Day 42 of 365</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1">Genesis 42–45</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2 mt-0.5">
+<span class="material-symbols-outlined text-[15px] text-outline">schedule</span>
+          4 chapters · ~18 min contemplative read
+        </p>
+</div>
+<!-- Atmospheric Thumbnail Framing the Passage -->
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 relative shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Quiet sacred morning landscape with soft golden dust particles filtering through ancient arched stone cloister windows, serene deep charcoal and muted violet ambient hues in painterly editorial style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP0IFqxBw8cDcsa02oLpfuCAgq1FhgLSS3AMu4Ky0Tw8-lRkNn0XukeZQYywEUBUdPEiZ5IwKypI6yStR1BNlgHXZYvxEXIIhpBsYw-QuKKe5YYBqblNYTBcMqqMV3BB3GerY6-CcjAf4f2F_4h-ICo8HzaKNRctkt8uMJSNLXU-Qfw1Y9lutzYQaRuYA1X9LJG1V7jvcSeMdJrw870wz8Hwn2g7vid6FI41gtqgnP6Jy11YNKz_KI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/80 to-transparent"></div>
+</div>
+</div>
+<!-- Daily Segmented Progress -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Daily Goal Progress</span>
+<span class="font-semibold text-secondary" id="progress-summary">2 of 4 chapters read</span>
+</div>
+<!-- 4 Segmented Bars -->
+<div class="grid grid-cols-4 gap-1.5 w-full h-1.5">
+<div class="h-full rounded-full bg-secondary transition-colors duration-300" id="seg-1"></div>
+<div class="h-full rounded-full bg-secondary transition-colors duration-300" id="seg-2"></div>
+<div class="h-full rounded-full bg-primary animate-pulse transition-colors duration-300" id="seg-3"></div>
+<div class="h-full rounded-full bg-surface-container-highest transition-colors duration-300" id="seg-4"></div>
+</div>
+</div>
+<!-- Chapter Checklist Cards -->
+<div class="flex flex-col gap-2 pt-1" id="chapter-list">
+<!-- Genesis 42 (Completed) -->
+<div class="group flex items-center justify-between p-3 rounded-lg bg-surface-container-high/60 transition-all hover:bg-surface-container-high" data-chapter="42">
+<div class="flex items-center gap-3 min-w-0">
+<button aria-label="Toggle Genesis 42" class="w-7 h-7 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-secondary text-[18px]">check</span>
+</button>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-on-surface-variant line-through truncate">Genesis 42</span>
+<span class="font-label-sm text-label-sm text-outline truncate">Joseph's brothers travel to Egypt</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline-variant uppercase">Done</span>
+</div>
+<!-- Genesis 43 (Completed) -->
+<div class="group flex items-center justify-between p-3 rounded-lg bg-surface-container-high/60 transition-all hover:bg-surface-container-high" data-chapter="43">
+<div class="flex items-center gap-3 min-w-0">
+<button aria-label="Toggle Genesis 43" class="w-7 h-7 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-secondary text-[18px]">check</span>
+</button>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-on-surface-variant line-through truncate">Genesis 43</span>
+<span class="font-label-sm text-label-sm text-outline truncate">The second journey with Benjamin</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline-variant uppercase">Done</span>
+</div>
+<!-- Genesis 44 (Current In-Progress) -->
+<div class="group flex items-center justify-between p-3 rounded-lg bg-surface-container-highest shadow-sm relative overflow-hidden" data-chapter="44">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex items-center gap-3 min-w-0 pl-1">
+<div class="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 relative">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping absolute"></span>
+<span class="w-2 h-2 rounded-full bg-primary relative"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold truncate">Genesis 44</span>
+<span class="px-1.5 py-0.5 rounded bg-primary-container/20 text-primary font-label-sm text-[10px] tracking-wider uppercase font-semibold">Reading</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">The silver cup &amp; Judah's plea (v. 18)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px] pr-1">play_arrow</span>
+</div>
+<!-- Genesis 45 (Upcoming) -->
+<div class="group flex items-center justify-between p-3 rounded-lg bg-surface-container-low transition-all hover:bg-surface-container-high" data-chapter="45">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center flex-shrink-0">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-on-surface truncate">Genesis 45</span>
+<span class="font-label-sm text-label-sm text-outline truncate">Joseph reveals his identity</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">~4 min</span>
+</div>
+</div>
+<!-- Call to Action Button: Direct Continuity -->
+<a class="w-full h-12 bg-primary-container hover:bg-primary text-on-primary-container rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg shadow-md transition-all active:scale-[0.99] font-semibold mt-1" href="#">
+<span class="material-symbols-outlined text-[20px]">auto_stories</span>
+<span>Continue Reading — Gen 44</span>
+</a>
+</section>
+<!-- Secondary Context Row (Dual Cards) -->
+<section class="grid grid-cols-2 gap-space-sm w-full">
+<!-- Streak Bento Item -->
+<div class="bg-surface-container rounded-xl p-3.5 flex flex-col justify-between shadow-sm min-h-[110px] relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider font-semibold">Discipline</span>
+<span class="text-[18px]">🔥</span>
+</div>
+<div class="flex flex-col mt-2">
+<span class="font-headline-md text-headline-md text-on-surface">7 Days</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Daily unbroken flame</span>
+</div>
+<!-- Micro Day Dots -->
+<div class="flex items-center gap-1 mt-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_6px_rgba(249,189,34,0.6)]"></span>
+</div>
+</div>
+<!-- Last Reflection / Note Bookmark Card -->
+<div class="bg-surface-container rounded-xl p-3.5 flex flex-col justify-between shadow-sm min-h-[110px] group cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Last Note</span>
+<span class="material-symbols-outlined text-[18px] text-primary">bookmark</span>
+</div>
+<div class="flex flex-col mt-1 min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Gen 42:21</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 italic font-scripture-body text-[14px] leading-tight mt-0.5">
+          "In truth we are guilty concerning our brother..."
+        </p>
+</div>
+<span class="font-label-sm text-label-sm text-outline-variant mt-1.5 flex items-center gap-1">
+        Yesterday · Tap to open
+      </span>
+</div>
+</section>
+<!-- Scripture of the Morning Pill Quote -->
+<section class="w-full bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col gap-2 relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">format_quote</span>
+        Morning Anchor
+      </span>
+<button aria-label="Share verse" class="text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+</div>
+<p class="font-scripture-body text-scripture-body text-on-surface italic leading-relaxed">
+      "God sent me before you to preserve life... to save your lives by a great deliverance."
+    </p>
+<div class="flex items-center justify-between pt-1">
+<span class="font-scripture-verse-num text-scripture-verse-num text-primary font-bold">Genesis 45:5, 7</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">ESV Sanctuary Edition</span>
+</div>
+</section>
+<!-- Sticky Continuity Snip (Floating Bottom Action Preview) -->
+<aside class="sticky bottom-2 z-30 w-full bg-surface-container-highest/95 backdrop-blur-md rounded-full p-2 pl-4 pr-2 flex items-center justify-between shadow-xl">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-[11px] text-on-surface-variant truncate">Paused reading</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Genesis 44:18 — Judah's intercession</span>
+</div>
+</div>
+<a class="h-9 px-4 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 flex-shrink-0 font-semibold shadow-sm active:scale-95 transition-transform" href="#">
+<span>Resume</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</aside>
+</div>
+<script>
+  // Simple interactive tactile feedback for chapter checkmarks
+  document.querySelectorAll('[data-chapter]').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('button')) {
+        var chapterNum = this.getAttribute('data-chapter');
+        var btn = this.querySelector('button');
+        var title = this.querySelector('.font-label-lg');
+        if (title.classList.contains('line-through')) {
+          title.classList.remove('line-through');
+          title.classList.remove('text-on-surface-variant');
+          title.classList.add('text-on-surface');
+          btn.classList.remove('bg-secondary/20');
+          btn.classList.add('bg-surface-container-highest');
+          btn.innerHTML = '<span class="w-2 h-2 rounded-full bg-outline"></span>';
+        } else {
+          title.classList.add('line-through');
+          title.classList.add('text-on-surface-variant');
+          title.classList.remove('text-on-surface');
+          btn.classList.add('bg-secondary/20');
+          btn.classList.remove('bg-surface-container-highest');
+          btn.innerHTML = '<span class="material-symbols-outlined text-secondary text-[18px]">check</span>';
+        }
+      }
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-low/90 backdrop-blur-xl shadow-[0_-4px_24px_rgba(0,0,0,0.5)]" data-active-classes="[&amp;_.nav-pill]:bg-primary-container/20 [&amp;_.nav-pill]:text-primary-container [&amp;_.nav-label]:text-primary-container [&amp;_.nav-label]:font-semibold"><div class="flex items-center justify-around h-20 px-space-xs"><a aria-current="page" class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all [&amp;_.nav-pill]:bg-primary-container/20 [&amp;_.nav-pill]:text-primary-container [&amp;_.nav-label]:text-primary-container [&amp;_.nav-label]:font-semibold" data-path="home" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">home</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">Home</span></a><a class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all" data-path="read" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">auto_stories</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">Read</span></a><a class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all" data-path="plan" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">event_available</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">Plan</span></a><a class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all" data-path="progress" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">bar_chart</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">Progress</span></a><a class="group flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 text-on-surface-variant hover:text-on-surface transition-all" data-path="more" href="#"><div class="nav-pill flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200"><span class="material-symbols-outlined text-[24px]">grid_view</span></div><span class="nav-label font-label-sm text-label-sm mt-0.5 transition-colors">More</span></a></div></nav></body></html>
