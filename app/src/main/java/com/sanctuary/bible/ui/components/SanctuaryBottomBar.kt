@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.sanctuary.bible.ui.navigation.Screen
@@ -45,7 +46,7 @@ fun SanctuaryBottomBar(
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalAlignment = Alignment.CenterVertically,
+                verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .clip(CircleShape)
                     .clickable(
@@ -60,7 +61,7 @@ fun SanctuaryBottomBar(
                         .clip(CircleShape)
                         .background(
                             if (isSelected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.2f)
-                            else androidx.compose.ui.graphics.Color.Transparent
+                            else Color.Transparent
                         ),
                     contentAlignment = Alignment.Center
                 ) {

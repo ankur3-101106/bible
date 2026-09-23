@@ -44,7 +44,6 @@ class ProgressViewModel(
         val today = LocalDate.now()
         val totalChaptersInPlan = if (days.isNotEmpty()) days.sumOf { it.chapters.size } else PlanningEngine.TOTAL_BIBLE_CHAPTERS
 
-        // Apply timeframe filter
         val filteredDays = when (timeframe) {
             ProgressTimeframe.WEEK -> days.filter { !it.date.isBefore(today.minusDays(6)) && !it.date.isAfter(today) }
             ProgressTimeframe.MONTH -> days.filter { it.date.month == today.month && it.date.year == today.year }
@@ -83,7 +82,7 @@ class ProgressViewModel(
         )
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubsubscribed(5000),
+        started = SharingStarted.WhileSubscribed(5000),
         initialValue = ProgressUiState()
     )
 

@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-private data class JsonBook(
+data class JsonBook(
     val abbrev: String,
     val name: String?,
     val chapters: List<List<String>>
