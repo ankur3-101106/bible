@@ -1,5 +1,6 @@
 package com.sanctuary.bible.ui.reader
 
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,10 +25,10 @@ import androidx.compose.material.icons.filled.BookmarkAdd
 import androidx.compose.material.icons.filled.Brush
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -36,14 +37,20 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,9 +63,51 @@ fun ReaderScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
+
+    var showNoteDialog by remember { mutableStateOf(false) }
+    var noteInputText by remember { mutableStateOf("") }
 
     val currentBgColor = Color(uiState.readerTheme.bgHex)
     val currentTextColor = Color(uiState.readerTheme.textHex)
+
+    if (showNoteDialog) {
+        AlertDialog(
+            onDismissRequest = { showNoteDialog = false },
+            title = {
+                Text(
+                    text = "Add Note to ${uiState.bookName} ${uiState.chapter}:${uiState.selectedVerseNumber}",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            },
+            text = {
+                OutlinedTextField(
+                    value = noteInputText,
+                    onValueChange = { noteInputText = it },
+                    label = { Text("Your Reflection") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (noteInputText.isNotBlank()) {
+                            viewModel.addNoteToSelectedVerse(noteInputText)
+                        }
+                        noteInputText = ""
+                        showNoteDialog = false
+                    }
+                ) {
+                    Text("Save Note")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showNoteDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 
     Box(
         modifier = Modifier
@@ -117,7 +166,7 @@ fun ReaderScreen(
                 }
             }
 
-            // Reader Utility Controls (A- / A+ and Theme Selection)
+            // Reader Utility Controls
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
@@ -181,7 +230,7 @@ fun ReaderScreen(
                 }
             }
 
-            // Chapter Navigation Header
+            // Chapter Navigation Header with Book Boundary Support
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -196,7 +245,7 @@ fun ReaderScreen(
                 }
 
                 Text(
-                    text = "Chapter ${uiState.chapter}",
+                    text = "${uiState.bookName} ${uiState.chapter}",
                     style = MaterialTheme.typography.labelLarge,
                     color = currentTextColor,
                     fontWeight = FontWeight.Bold
@@ -282,10 +331,10 @@ fun ReaderScreen(
                         )
                     }
 
-                    IconButton(onClick = { viewModel.addNoteToSelectedVerse("Reflection Note") }) {
+                    IconButton(onClick = { showNoteDialog = true }) {
                         Icon(
                             imageVector = Icons.Default.EditNote,
-                            contentDescription = "Note",
+                            contentDescription = "Add Note",
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -298,7 +347,21 @@ fun ReaderScreen(
                         )
                     }
 
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        val verseObj = uiState.verses.find { it.verseNumber == uiState.selectedVerseNumber }
+                        val textToShare = verseObj?.let {
+                            "\"${it.text}\" — ${it.bookName} ${it.chapter}:${it.verseNumber} (KJV Sanctuary)"
+                        } ?: ""
+
+                        if (textToShare.isNotBlank()) {
+                            val sendIntent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                putExtra(Intent.EXTRA_TEXT, textToShare)
+                                type = "text/plain"
+                            }
+                            context.startActivity(Intent.createChooser(sendIntent, "Share Scripture"))
+                        }
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Share,
                             contentDescription = "Share",

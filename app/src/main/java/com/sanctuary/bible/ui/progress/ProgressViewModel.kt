@@ -42,33 +42,42 @@ class ProgressViewModel(
         timeframeState
     ) { days, timeframe ->
         val today = LocalDate.now()
-        val completedDays = days.filter { it.completed }
+        val totalChaptersInPlan = if (days.isNotEmpty()) days.sumOf { it.chapters.size } else PlanningEngine.TOTAL_BIBLE_CHAPTERS
+
+        // Apply timeframe filter
+        val filteredDays = when (timeframe) {
+            ProgressTimeframe.WEEK -> days.filter { !it.date.isBefore(today.minusDays(6)) && !it.date.isAfter(today) }
+            ProgressTimeframe.MONTH -> days.filter { it.date.month == today.month && it.date.year == today.year }
+            ProgressTimeframe.ALL_TIME -> days
+        }
+
+        val completedDays = filteredDays.filter { it.completed }
         val completedCount = completedDays.sumOf { it.chapters.size }
 
-        val percent = if (PlanningEngine.TOTAL_BIBLE_CHAPTERS > 0) {
-            ((completedCount.toDouble() / PlanningEngine.TOTAL_BIBLE_CHAPTERS) * 100).toInt()
+        val percent = if (totalChaptersInPlan > 0) {
+            ((completedCount.toDouble() / totalChaptersInPlan) * 100).toInt()
         } else 0
 
-        val streak = PlanningEngine.calculateStreak(days, today)
+        val currentStreak = PlanningEngine.calculateStreak(days, today)
+        val longestStreak = PlanningEngine.calculateLongestStreak(days)
 
-        // Count unique books completed
         val booksRead = days.filter { it.completed }
             .flatMap { it.chapters }
             .map { it.split(" ").dropLast(1).joinToString(" ") }
             .distinct()
             .size
 
-        val monthlyDays = completedDays.filter { it.date.month == today.month && it.date.year == today.year }
+        val monthlyDays = days.filter { it.completed && it.date.month == today.month && it.date.year == today.year }
 
         ProgressUiState(
             selectedTimeframe = timeframe,
             completedChapters = completedCount,
-            totalChapters = PlanningEngine.TOTAL_BIBLE_CHAPTERS,
+            totalChapters = totalChaptersInPlan,
             overallPercentage = percent,
             booksReadCount = booksRead,
             totalReadingDays = completedDays.size,
-            currentStreak = streak,
-            longestStreak = (streak + 3).coerceAtLeast(streak),
+            currentStreak = currentStreak,
+            longestStreak = longestStreak,
             monthlyActiveDays = monthlyDays.size,
             monthlyChapters = monthlyDays.sumOf { it.chapters.size }
         )

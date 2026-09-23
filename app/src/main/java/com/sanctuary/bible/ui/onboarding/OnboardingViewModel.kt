@@ -69,7 +69,8 @@ class OnboardingViewModel(
             planRepository.createPlan(
                 startDate = state.startDate,
                 endDate = state.endDate,
-                title = state.selectedScope.title
+                title = state.selectedScope.title,
+                chapters = state.selectedScope.chapters
             )
             _uiState.update { it.copy(isGenerating = false, planCreated = true) }
         }

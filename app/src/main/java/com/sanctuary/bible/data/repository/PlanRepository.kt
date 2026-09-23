@@ -54,7 +54,12 @@ class PlanRepository(
         }
     }
 
-    suspend fun createPlan(startDate: LocalDate, endDate: LocalDate, title: String = "Complete the Bible"): Plan {
+    suspend fun createPlan(
+        startDate: LocalDate,
+        endDate: LocalDate,
+        title: String = "Complete the Bible",
+        chapters: List<String> = PlanningEngine.ALL_CHAPTERS_FLAT
+    ): Plan {
         sanctuaryDao.deleteAllPlans()
 
         val planId = "plan_${System.currentTimeMillis()}"
@@ -67,7 +72,12 @@ class PlanRepository(
         )
         sanctuaryDao.insertPlan(planEntity)
 
-        val planDays = PlanningEngine.generatePlan(planId, startDate, endDate)
+        val planDays = PlanningEngine.generatePlan(
+            planId = planId,
+            startDate = startDate,
+            endDate = endDate,
+            chaptersToAssign = chapters
+        )
         val dayEntities = planDays.map { day ->
             PlanDayEntity(
                 id = day.id,
@@ -133,7 +143,7 @@ class PlanRepository(
         if (active == null) {
             val today = LocalDate.now()
             val nextYear = today.plusDays(364)
-            createPlan(today, nextYear)
+            createPlan(today, nextYear, "Complete the Bible", PlanningEngine.ALL_CHAPTERS_FLAT)
         }
     }
 }

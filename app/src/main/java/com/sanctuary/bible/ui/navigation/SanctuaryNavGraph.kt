@@ -7,8 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.sanctuary.bible.ui.home.HomeScreen
 import com.sanctuary.bible.ui.home.HomeViewModel
+import com.sanctuary.bible.ui.more.BookmarksNotesScreen
 import com.sanctuary.bible.ui.more.MoreScreen
 import com.sanctuary.bible.ui.more.MoreViewModel
+import com.sanctuary.bible.ui.more.SearchScreen
 import com.sanctuary.bible.ui.onboarding.OnboardingScreen
 import com.sanctuary.bible.ui.onboarding.OnboardingViewModel
 import com.sanctuary.bible.ui.plan.PlanScreen
@@ -62,10 +64,30 @@ fun SanctuaryNavGraph(
         composable(Screen.More.route) {
             MoreScreen(
                 viewModel = moreViewModel,
-                onNavigateToSearch = {},
-                onNavigateToLibrary = {},
-                onNavigateToBookmarks = {},
+                onNavigateToSearch = { navController.navigate("search") },
+                onNavigateToLibrary = { navController.navigate(Screen.Read.route) },
+                onNavigateToBookmarks = { navController.navigate("bookmarks") },
                 onNavigateToSettings = { navController.navigate("settings") }
+            )
+        }
+        composable("search") {
+            SearchScreen(
+                viewModel = moreViewModel,
+                onBack = { navController.popBackStack() },
+                onSelectVerse = { book, chap ->
+                    readerViewModel.loadChapter(book, chap)
+                    navController.navigate(Screen.Read.route)
+                }
+            )
+        }
+        composable("bookmarks") {
+            BookmarksNotesScreen(
+                viewModel = moreViewModel,
+                onBack = { navController.popBackStack() },
+                onSelectBookmark = { book, chap ->
+                    readerViewModel.loadChapter(book, chap)
+                    navController.navigate(Screen.Read.route)
+                }
             )
         }
         composable("settings") {

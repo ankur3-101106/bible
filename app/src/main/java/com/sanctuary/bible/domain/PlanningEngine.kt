@@ -180,4 +180,32 @@ object PlanningEngine {
         }
         return streak
     }
+
+    fun calculateLongestStreak(planDays: List<PlanDay>): Int {
+        if (planDays.isEmpty()) return 0
+
+        val completedDates = planDays
+            .filter { it.completed }
+            .map { it.date }
+            .distinct()
+            .sorted()
+
+        if (completedDates.isEmpty()) return 0
+
+        var maxStreak = 1
+        var currentStreak = 1
+
+        for (i in 1 until completedDates.size) {
+            if (completedDates[i] == completedDates[i - 1].plusDays(1)) {
+                currentStreak++
+                if (currentStreak > maxStreak) {
+                    maxStreak = currentStreak
+                }
+            } else {
+                currentStreak = 1
+            }
+        }
+
+        return maxStreak
+    }
 }

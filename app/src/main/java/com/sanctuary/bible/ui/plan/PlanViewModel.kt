@@ -38,13 +38,14 @@ class PlanViewModel(
         planRepository.activePlanDays
     ) { plan, days ->
         val today = LocalDate.now()
+        val totalChaptersInPlan = if (days.isNotEmpty()) days.sumOf { it.chapters.size } else PlanningEngine.TOTAL_BIBLE_CHAPTERS
         val completedCount = days.filter { it.completed }.sumOf { it.chapters.size }
-        val percent = if (PlanningEngine.TOTAL_BIBLE_CHAPTERS > 0) {
-            ((completedCount.toDouble() / PlanningEngine.TOTAL_BIBLE_CHAPTERS) * 100).toInt()
+        val percent = if (totalChaptersInPlan > 0) {
+            ((completedCount.toDouble() / totalChaptersInPlan) * 100).toInt()
         } else 0
 
         val totalDays = days.size
-        val pace = if (totalDays > 0) (PlanningEngine.TOTAL_BIBLE_CHAPTERS / totalDays) else 0
+        val pace = if (totalDays > 0) (totalChaptersInPlan / totalDays) else 0
 
         val missed = days.any { !it.completed && it.date.isBefore(today) }
 
@@ -52,7 +53,7 @@ class PlanViewModel(
             activePlan = plan,
             planDays = days,
             completedChapters = completedCount,
-            totalChapters = PlanningEngine.TOTAL_BIBLE_CHAPTERS,
+            totalChapters = totalChaptersInPlan,
             progressPercentage = percent,
             totalDurationDays = totalDays,
             averagePaceChapters = pace,

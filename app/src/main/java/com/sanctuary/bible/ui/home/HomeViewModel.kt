@@ -66,9 +66,10 @@ class HomeViewModel(
             ?: planDays.find { !it.completed && !it.date.isBefore(today) }
             ?: planDays.firstOrNull()
 
+        val totalChaptersInPlan = if (planDays.isNotEmpty()) planDays.sumOf { it.chapters.size } else PlanningEngine.TOTAL_BIBLE_CHAPTERS
         val completedCount = planDays.filter { it.completed }.sumOf { it.chapters.size }
-        val progressPercent = if (PlanningEngine.TOTAL_BIBLE_CHAPTERS > 0) {
-            ((completedCount.toDouble() / PlanningEngine.TOTAL_BIBLE_CHAPTERS) * 100).toInt()
+        val progressPercent = if (totalChaptersInPlan > 0) {
+            ((completedCount.toDouble() / totalChaptersInPlan) * 100).toInt()
         } else 0
 
         val daysLeft = if (activePlan != null) {
@@ -94,7 +95,7 @@ class HomeViewModel(
             todayPlanDay = todayDay,
             todayChapterItems = chapterItems,
             completedChaptersCount = completedCount,
-            totalChaptersCount = PlanningEngine.TOTAL_BIBLE_CHAPTERS,
+            totalChaptersCount = totalChaptersInPlan,
             progressPercentage = progressPercent,
             daysRemaining = daysLeft,
             streakDays = streak,
