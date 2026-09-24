@@ -58,16 +58,17 @@ class HomeViewModel(
     val uiState: StateFlow<HomeUiState> = combine(
         planRepository.activePlan,
         planRepository.activePlanDays,
+        planRepository.completedChapterRefs,
         bibleRepository.latestNote,
         greetingState
-    ) { activePlan, planDays, latestNote, greeting ->
+    ) { activePlan, planDays, completedSet, latestNote, greeting ->
         val today = LocalDate.now()
         val todayDay = planDays.find { it.date == today }
             ?: planDays.find { !it.completed && !it.date.isBefore(today) }
             ?: planDays.firstOrNull()
 
         val totalChaptersInPlan = if (planDays.isNotEmpty()) planDays.sumOf { it.chapters.size } else PlanningEngine.TOTAL_BIBLE_CHAPTERS
-        val completedCount = planDays.filter { it.completed }.sumOf { it.chapters.size }
+        val completedCount = planDays.flatMap { it.chapters }.count { completedSet.contains(it) }
         val progressPercent = if (totalChaptersInPlan > 0) {
             ((completedCount.toDouble() / totalChaptersInPlan) * 100).toInt()
         } else 0
@@ -79,7 +80,7 @@ class HomeViewModel(
         val streak = PlanningEngine.calculateStreak(planDays, today)
 
         val chapterItems = todayDay?.chapters?.mapIndexed { index, chapterRef ->
-            val isComp = todayDay.completed
+            val isComp = completedSet.contains(chapterRef)
             val isCurrent = !isComp && index == 0
             ChapterCheckItem(
                 chapterRef = chapterRef,
@@ -106,7 +107,7 @@ class HomeViewModel(
                 verseNumber = 5,
                 text = "God sent me before you to preserve life... to save your lives by a great deliverance."
             ),
-            pausedVerseRef = todayDay?.chapters?.firstOrNull()?.let { "$it — In progress" }
+            pausedVerseRef = todayDay?.chapters?.firstOrNull { !completedSet.contains(it) }?.let { "$it — In progress" }
                 ?: "Genesis 44:18 — Judah's intercession"
         )
     }.stateIn(
@@ -116,9 +117,13 @@ class HomeViewModel(
     )
 
     fun toggleChapterCheck(chapterRef: String) {
-        val currentDay = uiState.value.todayPlanDay ?: return
         viewModelScope.launch {
-            planRepository.toggleDayCompleted(currentDay.id, !currentDay.completed)
+            val isCurrentlyCompleted = planRepository.isChapterCompleted(chapterRef)
+            if (isCurrentlyCompleted) {
+                planRepository.unmarkChapterCompleted(chapterRef)
+            } else {
+                planRepository.markChapterCompleted(chapterRef)
+            }
         }
     }
 

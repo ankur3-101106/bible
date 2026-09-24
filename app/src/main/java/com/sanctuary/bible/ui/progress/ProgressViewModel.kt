@@ -39,8 +39,9 @@ class ProgressViewModel(
 
     val uiState: StateFlow<ProgressUiState> = combine(
         planRepository.activePlanDays,
+        planRepository.completedChapterRefs,
         timeframeState
-    ) { days, timeframe ->
+    ) { days, completedSet, timeframe ->
         val today = LocalDate.now()
         val totalChaptersInPlan = if (days.isNotEmpty()) days.sumOf { it.chapters.size } else PlanningEngine.TOTAL_BIBLE_CHAPTERS
 
@@ -50,8 +51,7 @@ class ProgressViewModel(
             ProgressTimeframe.ALL_TIME -> days
         }
 
-        val completedDays = filteredDays.filter { it.completed }
-        val completedCount = completedDays.sumOf { it.chapters.size }
+        val completedCount = filteredDays.flatMap { it.chapters }.count { completedSet.contains(it) }
 
         val percent = if (totalChaptersInPlan > 0) {
             ((completedCount.toDouble() / totalChaptersInPlan) * 100).toInt()
@@ -60,10 +60,10 @@ class ProgressViewModel(
         val currentStreak = PlanningEngine.calculateStreak(days, today)
         val longestStreak = PlanningEngine.calculateLongestStreak(days)
 
-        val booksRead = days.filter { it.completed }
-            .flatMap { it.chapters }
+        val booksRead = completedSet
             .map { it.split(" ").dropLast(1).joinToString(" ") }
             .distinct()
+            .filter { it.isNotBlank() }
             .size
 
         val monthlyDays = days.filter { it.completed && it.date.month == today.month && it.date.year == today.year }
@@ -74,11 +74,11 @@ class ProgressViewModel(
             totalChapters = totalChaptersInPlan,
             overallPercentage = percent,
             booksReadCount = booksRead,
-            totalReadingDays = completedDays.size,
+            totalReadingDays = days.count { it.completed },
             currentStreak = currentStreak,
             longestStreak = longestStreak,
             monthlyActiveDays = monthlyDays.size,
-            monthlyChapters = monthlyDays.sumOf { it.chapters.size }
+            monthlyChapters = monthlyDays.flatMap { it.chapters }.count { completedSet.contains(it) }
         )
     }.stateIn(
         scope = viewModelScope,

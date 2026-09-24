@@ -22,6 +22,11 @@ class BackupManager(
         val plan = dao.getActivePlanSync()
         val plans = if (plan != null) listOf(plan) else emptyList()
         val planDays = if (plan != null) dao.getPlanDaysSync(plan.id) else emptyList()
+        val bookmarks = dao.getAllBookmarksSync()
+        val notes = dao.getAllNotesSync()
+        val highlights = dao.getAllHighlightsSync()
+        val positions = dao.getAllReadingPositionsSync()
+        val completed = dao.getAllCompletedChaptersSync()
 
         SanctuaryBackup(
             backupVersion = 1,
@@ -29,9 +34,11 @@ class BackupManager(
             appVersion = "1.0",
             plans = plans,
             planDays = planDays,
-            bookmarks = emptyList(),
-            notes = emptyList(),
-            highlights = emptyList()
+            bookmarks = bookmarks,
+            notes = notes,
+            highlights = highlights,
+            readingPositions = positions,
+            completedChapters = completed
         )
     }
 
@@ -72,6 +79,8 @@ class BackupManager(
                 backup.bookmarks.forEach { dao.insertBookmark(it) }
                 backup.notes.forEach { dao.insertNote(it) }
                 backup.highlights.forEach { dao.insertHighlight(it) }
+                backup.readingPositions.forEach { dao.saveReadingPosition(it) }
+                backup.completedChapters.forEach { dao.insertCompletedChapter(it) }
             }
 
             Result.success(Unit)

@@ -20,6 +20,7 @@ sealed class Screen(
     object More : Screen("more", "More", Icons.Default.GridView)
 
     companion object {
-        val bottomNavScreens = listOf(Home, Read, Plan, Progress, More)
+        val bottomNavScreens: List<Screen>
+            get() = listOf(Home, Read, Plan, Progress, More)
     }
 }

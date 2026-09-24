@@ -52,3 +52,17 @@ data class HighlightEntity(
     val colorHex: String,
     val createdAt: Long = System.currentTimeMillis()
 )
+
+@Entity(tableName = "reading_positions", primaryKeys = ["bookName", "chapter"])
+data class ReadingPositionEntity(
+    val bookName: String,
+    val chapter: Int,
+    val verse: Int,
+    val updatedAt: Long = System.currentTimeMillis()
+)
+
+@Entity(tableName = "completed_chapters")
+data class CompletedChapterEntity(
+    @PrimaryKey val chapterRef: String,
+    val completedAt: Long = System.currentTimeMillis()
+)

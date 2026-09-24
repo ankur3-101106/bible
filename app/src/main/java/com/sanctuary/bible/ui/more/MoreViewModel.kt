@@ -4,21 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sanctuary.bible.data.model.Bookmark
+import com.sanctuary.bible.data.model.JsonBook
 import com.sanctuary.bible.data.model.Note
 import com.sanctuary.bible.data.repository.BibleRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -86,7 +84,7 @@ class MoreViewModel(
     }
 
     private suspend fun searchInternal(query: String): List<SearchResultItem> {
-        val data = bibleRepository.loadBibleData()
+        val data: List<JsonBook> = bibleRepository.loadBibleData()
         val results = mutableListOf<SearchResultItem>()
 
         for (book in data) {

@@ -16,13 +16,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkAdd
 import androidx.compose.material.icons.filled.Brush
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.EditNote
@@ -45,6 +48,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +59,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sanctuary.bible.ui.theme.ScriptureFontFamily
+import kotlinx.coroutines.launch
 
 @Composable
 fun ReaderScreen(
@@ -62,7 +67,8 @@ fun ReaderScreen(
     onBack: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val scrollState = rememberScrollState()
+    val lazyListState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
     var showNoteDialog by remember { mutableStateOf(false) }
@@ -114,185 +120,339 @@ fun ReaderScreen(
             .fillMaxSize()
             .background(currentBgColor)
     ) {
-        Column(
+        LazyColumn(
+            state = lazyListState,
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(horizontal = 20.dp, vertical = 12.dp)
-                .padding(bottom = 90.dp),
+                .padding(horizontal = 20.dp)
+                .padding(top = 12.dp, bottom = 90.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Header Bar & Controls
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text(
-                        text = "THE PENTATEUCH",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = "${uiState.bookName} ${uiState.chapter}",
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = currentTextColor
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-                        .padding(horizontal = 12.dp, vertical = 6.dp)
+            // Item 0: Header Bar & Controls
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.Headphones,
-                            contentDescription = "Audio",
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
+                    Column {
                         Text(
-                            text = "Listen",
+                            text = "SCRIPTURE CANVAS",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold
                         )
+                        Text(
+                            text = "${uiState.bookName} ${uiState.chapter}",
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = currentTextColor
+                        )
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                            .padding(horizontal = 12.dp, vertical = 6.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = Icons.Default.Headphones,
+                                contentDescription = "Audio",
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = "Listen",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 }
             }
 
-            // Reader Utility Controls
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-                )
-            ) {
+            // Item 1: Saved Reading Position Banner (if active)
+            if (uiState.savedReadingPositionVerse != null) {
+                item {
+                    val savedVerse = uiState.savedReadingPositionVerse!!
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f)
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Bookmark,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "Reading position at v. $savedVerse",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+
+                            Button(
+                                onClick = {
+                                    val targetIndex = (savedVerse - 1).coerceIn(0, (uiState.verses.size - 1).coerceAtLeast(0))
+                                    coroutineScope.launch {
+                                        lazyListState.animateScrollToItem(targetIndex + 3) // Account for header items
+                                    }
+                                },
+                                shape = CircleShape,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary
+                                )
+                            ) {
+                                Text(text = "Continue", style = MaterialTheme.typography.labelSmall)
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Item 2: Reader Utility Controls
+            item {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Font Scale Toggles
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(MaterialTheme.colorScheme.surfaceContainer)
+                                .padding(horizontal = 8.dp, vertical = 4.dp)
+                        ) {
+                            Text(
+                                text = "A-",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier
+                                    .clickable { viewModel.decreaseFontSize() }
+                                    .padding(horizontal = 8.dp)
+                            )
+                            Text(text = "|", color = MaterialTheme.colorScheme.outlineVariant)
+                            Text(
+                                text = "A+",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .clickable { viewModel.increaseFontSize() }
+                                    .padding(horizontal = 8.dp)
+                            )
+                        }
+
+                        // Reader Color Themes
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            ReaderTheme.entries.forEach { theme ->
+                                val isSelected = uiState.readerTheme == theme
+                                Box(
+                                    modifier = Modifier
+                                        .size(28.dp)
+                                        .clip(CircleShape)
+                                        .background(Color(theme.bgHex))
+                                        .border(
+                                            width = if (isSelected) 2.dp else 1.dp,
+                                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
+                                            shape = CircleShape
+                                        )
+                                        .clickable { viewModel.setReaderTheme(theme) }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Item 3: Top Chapter Navigation Controls
+            item {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Font Scale Toggles
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(MaterialTheme.colorScheme.surfaceContainer)
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
-                    ) {
-                        Text(
-                            text = "A-",
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier
-                                .clickable { viewModel.decreaseFontSize() }
-                                .padding(horizontal = 8.dp)
-                        )
-                        Text(text = "|", color = MaterialTheme.colorScheme.outlineVariant)
-                        Text(
-                            text = "A+",
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .clickable { viewModel.increaseFontSize() }
-                                .padding(horizontal = 8.dp)
+                    IconButton(onClick = { viewModel.previousChapter() }) {
+                        Icon(
+                            imageVector = Icons.Default.ChevronLeft,
+                            contentDescription = "Previous Chapter",
+                            tint = currentTextColor
                         )
                     }
 
-                    // Reader Color Themes
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        ReaderTheme.entries.forEach { theme ->
-                            val isSelected = uiState.readerTheme == theme
-                            Box(
-                                modifier = Modifier
-                                    .size(28.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(theme.bgHex))
-                                    .border(
-                                        width = if (isSelected) 2.dp else 1.dp,
-                                        color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
-                                        shape = CircleShape
-                                    )
-                                    .clickable { viewModel.setReaderTheme(theme) }
-                            )
-                        }
+                    Text(
+                        text = "${uiState.bookName} ${uiState.chapter}",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = currentTextColor,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    IconButton(onClick = { viewModel.nextChapter() }) {
+                        Icon(
+                            imageVector = Icons.Default.ChevronRight,
+                            contentDescription = "Next Chapter",
+                            tint = currentTextColor
+                        )
                     }
                 }
             }
 
-            // Chapter Navigation Header with Book Boundary Support
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = { viewModel.previousChapter() }) {
-                    Icon(
-                        imageVector = Icons.Default.ChevronLeft,
-                        contentDescription = "Previous Chapter",
-                        tint = currentTextColor
-                    )
-                }
-
-                Text(
-                    text = "${uiState.bookName} ${uiState.chapter}",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = currentTextColor,
-                    fontWeight = FontWeight.Bold
-                )
-
-                IconButton(onClick = { viewModel.nextChapter() }) {
-                    Icon(
-                        imageVector = Icons.Default.ChevronRight,
-                        contentDescription = "Next Chapter",
-                        tint = currentTextColor
-                    )
-                }
-            }
-
-            // Scripture Verses Canvas
+            // Scripture Verses Items
             if (uiState.isLoading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                    }
                 }
             } else {
-                Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                    uiState.verses.forEach { verse ->
-                        val isSelected = uiState.selectedVerseNumber == verse.verseNumber
-                        val verseBg = if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.15f) else Color.Transparent
+                itemsIndexed(uiState.verses) { _, verse ->
+                    val isSelected = uiState.selectedVerseNumber == verse.verseNumber
+                    val isSavedPosition = uiState.savedReadingPositionVerse == verse.verseNumber
+                    val verseBg = if (isSelected) {
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+                    } else if (isSavedPosition) {
+                        MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                    } else {
+                        Color.Transparent
+                    }
 
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(verseBg)
-                                .clickable { viewModel.selectVerse(verse.verseNumber) }
-                                .padding(8.dp)
-                        ) {
-                            Text(
-                                text = "${verse.verseNumber}  ${verse.text}",
-                                fontFamily = ScriptureFontFamily,
-                                fontSize = uiState.fontSizeSp.sp,
-                                lineHeight = (uiState.fontSizeSp * 1.6f).sp,
-                                color = currentTextColor
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(verseBg)
+                            .clickable { viewModel.selectVerse(verse.verseNumber) }
+                            .padding(8.dp)
+                    ) {
+                        if (isSavedPosition) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(bottom = 4.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Bookmark,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier.size(14.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = "READING POSITION",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+
+                        Text(
+                            text = "${verse.verseNumber}  ${verse.text}",
+                            fontFamily = ScriptureFontFamily,
+                            fontSize = uiState.fontSizeSp.sp,
+                            lineHeight = (uiState.fontSizeSp * 1.6f).sp,
+                            color = currentTextColor
+                        )
+                    }
+                }
+
+                // Item: Complete Chapter Button
+                item {
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Button(
+                        onClick = { viewModel.completeCurrentChapter() },
+                        enabled = !uiState.isChapterCompleted,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (uiState.isChapterCompleted) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.primaryContainer,
+                            contentColor = if (uiState.isChapterCompleted) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = if (uiState.isChapterCompleted) "✓ Chapter Completed" else "✓ Complete Chapter",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+                // Item: Bottom Chapter Navigation Controls
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(onClick = { viewModel.previousChapter() }) {
+                            Icon(
+                                imageVector = Icons.Default.ChevronLeft,
+                                contentDescription = "Previous Chapter",
+                                tint = currentTextColor
+                            )
+                        }
+
+                        Text(
+                            text = "${uiState.bookName} ${uiState.chapter}",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = currentTextColor,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        IconButton(onClick = { viewModel.nextChapter() }) {
+                            Icon(
+                                imageVector = Icons.Default.ChevronRight,
+                                contentDescription = "Next Chapter",
+                                tint = currentTextColor
                             )
                         }
                     }
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
             }
         }
@@ -314,7 +474,7 @@ fun ReaderScreen(
                 Row(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Text(
                         text = "v. ${uiState.selectedVerseNumber}",
@@ -322,6 +482,19 @@ fun ReaderScreen(
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     )
+
+                    // Mark Reading Position Action
+                    IconButton(onClick = {
+                        uiState.selectedVerseNumber?.let { verseNum ->
+                            viewModel.markReadingPosition(verseNum)
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Bookmark,
+                            contentDescription = "Mark Reading Position",
+                            tint = MaterialTheme.colorScheme.secondary
+                        )
+                    }
 
                     IconButton(onClick = { viewModel.highlightSelectedVerse() }) {
                         Icon(

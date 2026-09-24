@@ -2,6 +2,12 @@ package com.sanctuary.bible.data.model
 
 import java.time.LocalDate
 
+data class JsonBook(
+    val abbrev: String,
+    val name: String?,
+    val chapters: List<List<String>>
+)
+
 data class BibleBookMeta(
     val name: String,
     val chapterCount: Int,

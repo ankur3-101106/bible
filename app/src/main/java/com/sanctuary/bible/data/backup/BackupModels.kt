@@ -1,10 +1,12 @@
 package com.sanctuary.bible.data.backup
 
 import com.sanctuary.bible.data.local.BookmarkEntity
+import com.sanctuary.bible.data.local.CompletedChapterEntity
 import com.sanctuary.bible.data.local.HighlightEntity
 import com.sanctuary.bible.data.local.NoteEntity
 import com.sanctuary.bible.data.local.PlanDayEntity
 import com.sanctuary.bible.data.local.PlanEntity
+import com.sanctuary.bible.data.local.ReadingPositionEntity
 
 data class SanctuaryBackup(
     val backupVersion: Int = 1,
@@ -14,5 +16,7 @@ data class SanctuaryBackup(
     val planDays: List<PlanDayEntity> = emptyList(),
     val bookmarks: List<BookmarkEntity> = emptyList(),
     val notes: List<NoteEntity> = emptyList(),
-    val highlights: List<HighlightEntity> = emptyList()
+    val highlights: List<HighlightEntity> = emptyList(),
+    val readingPositions: List<ReadingPositionEntity> = emptyList(),
+    val completedChapters: List<CompletedChapterEntity> = emptyList()
 )

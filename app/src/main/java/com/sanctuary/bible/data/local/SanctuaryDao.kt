@@ -43,6 +43,9 @@ interface SanctuaryDao {
     @Query("SELECT * FROM bookmarks ORDER BY createdAt DESC")
     fun getAllBookmarks(): Flow<List<BookmarkEntity>>
 
+    @Query("SELECT * FROM bookmarks ORDER BY createdAt DESC")
+    suspend fun getAllBookmarksSync(): List<BookmarkEntity>
+
     @Query("DELETE FROM bookmarks WHERE bookName = :bookName AND chapter = :chapter AND verse = :verse")
     suspend fun deleteBookmark(bookName: String, chapter: Int, verse: Int)
 
@@ -53,6 +56,9 @@ interface SanctuaryDao {
     @Query("SELECT * FROM notes ORDER BY updatedAt DESC")
     fun getAllNotes(): Flow<List<NoteEntity>>
 
+    @Query("SELECT * FROM notes ORDER BY updatedAt DESC")
+    suspend fun getAllNotesSync(): List<NoteEntity>
+
     @Query("SELECT * FROM notes ORDER BY updatedAt DESC LIMIT 1")
     fun getLatestNote(): Flow<NoteEntity?>
 
@@ -62,4 +68,48 @@ interface SanctuaryDao {
 
     @Query("SELECT * FROM highlights WHERE bookName = :bookName AND chapter = :chapter")
     fun getHighlightsForChapter(bookName: String, chapter: Int): Flow<List<HighlightEntity>>
+
+    @Query("SELECT * FROM highlights ORDER BY createdAt DESC")
+    suspend fun getAllHighlightsSync(): List<HighlightEntity>
+
+    // Reading Positions
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveReadingPosition(position: ReadingPositionEntity)
+
+    @Query("SELECT * FROM reading_positions WHERE bookName = :bookName AND chapter = :chapter LIMIT 1")
+    fun getReadingPosition(bookName: String, chapter: Int): Flow<ReadingPositionEntity?>
+
+    @Query("SELECT * FROM reading_positions WHERE bookName = :bookName AND chapter = :chapter LIMIT 1")
+    suspend fun getReadingPositionSync(bookName: String, chapter: Int): ReadingPositionEntity?
+
+    @Query("DELETE FROM reading_positions WHERE bookName = :bookName AND chapter = :chapter")
+    suspend fun clearReadingPosition(bookName: String, chapter: Int)
+
+    @Query("SELECT * FROM reading_positions ORDER BY updatedAt DESC")
+    fun getAllReadingPositions(): Flow<List<ReadingPositionEntity>>
+
+    @Query("SELECT * FROM reading_positions ORDER BY updatedAt DESC")
+    suspend fun getAllReadingPositionsSync(): List<ReadingPositionEntity>
+
+    // Completed Chapters
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCompletedChapter(completedChapter: CompletedChapterEntity)
+
+    @Query("SELECT * FROM completed_chapters")
+    fun getAllCompletedChapters(): Flow<List<CompletedChapterEntity>>
+
+    @Query("SELECT * FROM completed_chapters")
+    suspend fun getAllCompletedChaptersSync(): List<CompletedChapterEntity>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM completed_chapters WHERE chapterRef = :chapterRef)")
+    suspend fun isChapterCompleted(chapterRef: String): Boolean
+
+    @Query("SELECT EXISTS(SELECT 1 FROM completed_chapters WHERE chapterRef = :chapterRef)")
+    fun isChapterCompletedFlow(chapterRef: String): Flow<Boolean>
+
+    @Query("DELETE FROM completed_chapters WHERE chapterRef = :chapterRef")
+    suspend fun deleteCompletedChapter(chapterRef: String)
+
+    @Query("DELETE FROM completed_chapters")
+    suspend fun deleteAllCompletedChapters()
 }

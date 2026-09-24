@@ -27,6 +27,7 @@ data class ReaderUiState(
     val fontSizeSp: Float = 19f,
     val readerTheme: ReaderTheme = ReaderTheme.SANCTUARY,
     val selectedVerseNumber: Int? = null,
+    val savedReadingPositionVerse: Int? = null,
     val isLoading: Boolean = false,
     val isChapterCompleted: Boolean = false
 )
@@ -64,7 +65,40 @@ class ReaderViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, bookName = bookName, chapter = chapter, selectedVerseNumber = null) }
             val verses = bibleRepository.getChapterVerses(bookName, chapter)
-            _uiState.update { it.copy(verses = verses, isLoading = false) }
+            val savedPos = bibleRepository.getReadingPositionSync(bookName, chapter)?.verse
+            val chapterRef = "$bookName $chapter"
+            val isComp = planRepository.isChapterCompleted(chapterRef)
+            _uiState.update {
+                it.copy(
+                    verses = verses,
+                    isLoading = false,
+                    savedReadingPositionVerse = savedPos,
+                    isChapterCompleted = isComp
+                )
+            }
+        }
+    }
+
+    fun markReadingPosition(verseNumber: Int) {
+        val current = _uiState.value
+        viewModelScope.launch {
+            bibleRepository.saveReadingPosition(current.bookName, current.chapter, verseNumber)
+            _uiState.update { it.copy(savedReadingPositionVerse = verseNumber) }
+        }
+    }
+
+    fun completeCurrentChapter() {
+        val current = _uiState.value
+        viewModelScope.launch {
+            val chapterRef = "${current.bookName} ${current.chapter}"
+            planRepository.markChapterCompleted(chapterRef)
+            bibleRepository.clearReadingPosition(current.bookName, current.chapter)
+            _uiState.update {
+                it.copy(
+                    isChapterCompleted = true,
+                    savedReadingPositionVerse = null
+                )
+            }
         }
     }
 
